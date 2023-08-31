@@ -1,0 +1,117 @@
+body {
+  font-family: 'Yandex Sans Text', serif !important;
+}
+
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-corner,
+::-webkit-resizer {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--q-secondary);
+  border: 3px solid #ffffff;
+  border-radius: 4px;
+  &:hover {
+    border: 1px solid #ffffff;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+.q-menu {
+  border-radius: 10px !important;
+}
+
+.bg-item {
+  background: #f8f9fa !important;
+}
+
+.q-tab__indicator {
+  height: 0.22em;
+  border-radius: 20px;
+  margin: 0 16px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.dashed-line {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  border-bottom: 2px $grey-5 dotted;
+}
+
+.opacity-5 {
+  opacity: 0.5;
+}
+
+.text-size-12 {
+  font-size: 12px !important;
+}
+
+.text-size-13 {
+  font-size: 13px !important;
+}
+
+.text-size-14 {
+  font-size: 14px !important;
+}
+
+.text-size-16 {
+  font-size: 16px !important;
+}
+
+.text-size-20 {
+  font-size: 20px !important;
+}
+
+.text-size-24 {
+  font-size: 24px !important;
+}
+
+.text-size-30 {
+  font-size: 30px !important;
+}
+
+.text-size-36 {
+  font-size: 36px !important;
+}
+
+.letter-spacing-40 {
+  letter-spacing: 0.4px !important;
+}
+
+.letter-spacing-100 {
+  letter-spacing: 1px !important;
+}
+
+.letter-spacing-225 {
+  letter-spacing: 2.25px !important;
+}
+
+.letter-spacing-263 {
+  letter-spacing: 2.63px !important;
+}
+
+.letter-spacing-300 {
+  letter-spacing: 3px !important;
+}
+
+.letter-spacing-375 {
+  letter-spacing: 3.75px !important;
+}
+
+.letter-spacing-450 {
+  letter-spacing: 4.5px !important;
+}
+
+.rounded-10 {
+  border-radius: 10px !important;
+}
