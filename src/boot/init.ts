@@ -8,6 +8,7 @@ export default boot(async () => {
   Dark.set(config.dark);
 
   window.Telegram.WebApp.enableClosingConfirmation();
+  window.Telegram.WebApp.expand();
 
   fetchProxy('getSettings', { public_key: config.public_key });
 
