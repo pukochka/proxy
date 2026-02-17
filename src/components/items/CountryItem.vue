@@ -18,7 +18,7 @@
 import { defaultProxyCountry } from 'stores/defaults';
 import { useDataStore } from 'stores/data/dataStore';
 
-const props = withDefaults(defineProps<CountryItemProps>(), {
+withDefaults(defineProps<CountryItemProps>(), {
   item: () => defaultProxyCountry,
 });
 
@@ -32,5 +32,3 @@ interface CountryItemProps {
   item: ProxyCountry;
 }
 </script>
-
-<style lang="scss" scoped></style>

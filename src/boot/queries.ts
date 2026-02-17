@@ -5,7 +5,7 @@ import { useDataStore } from 'stores/data/dataStore';
 
 import { getHash } from 'src/utils/string';
 import { useStatesStore } from 'stores/states/statesStore';
-import { Notify, setCssVar } from 'quasar';
+import { LocalStorage, Notify, setCssVar } from 'quasar';
 
 import { useLang } from 'src/utils/useLang';
 
@@ -66,6 +66,14 @@ export async function fetchProxy<Q extends ProxyQueries>(
           textColor: 'white',
           timeout: 2000,
         });
+        states.tab = 'orders';
+
+        const createdOrder = response.data.data?.[0]
+
+        if (createdOrder) {
+          data.selectedOrder = response.data.data?.[0];
+          states.openDialog('view');
+        }
 
         /** */
       } else if (query === 'prolongProxy') {
@@ -123,6 +131,9 @@ export async function fetchProxy<Q extends ProxyQueries>(
 
         setCssVar('primary', color.primary);
         setCssVar('secondary', color.secondary);
+
+        LocalStorage.set('_bott-primary', color.primary);
+        LocalStorage.set('_bott-secondary', color.secondary);
 
         /** */
       } else if (query === 'deleteProxy') {

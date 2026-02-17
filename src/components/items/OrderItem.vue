@@ -64,8 +64,6 @@ import { defaultProxyOrder } from 'stores/defaults';
 import { date } from 'quasar';
 
 import { useStatesStore } from 'stores/states/statesStore';
-import { useDialog } from 'src/utils/useDialog';
-import { fetchProxy } from 'boot/queries';
 import { useDataStore } from 'stores/data/dataStore';
 import { useLang } from 'src/utils/useLang';
 

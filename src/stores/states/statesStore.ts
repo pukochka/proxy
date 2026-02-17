@@ -40,9 +40,6 @@ export const useStatesStore = defineStore('states', {
     itemBackgroundClass: () => (config.dark ? ' bg-dark' : ' bg-item'),
   },
   actions: {
-    toggleTab(name: TabNames) {
-      this.tab = name;
-    },
     openDialog(name: DialogNames) {
       this.dialogs[name] = true;
     },
