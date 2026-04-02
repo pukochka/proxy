@@ -1,14 +1,14 @@
 <template>
   <div class="q-gutter-y-md col relative-position">
     <div class="text-center text-size-30 text-weight-bold">
-      {{ lang.orders }}
+      {{ t('orders') }}
     </div>
 
     <div
       class="text-center text-size-20 q-pt-xl"
       v-if="data.orders.length === 0 && filtered === false"
     >
-      {{ lang.order_warning }}
+      {{ t('order_warning') }}
     </div>
 
     <div class="" v-else>
@@ -18,9 +18,9 @@
           unelevated
           no-caps
           icon="tune"
-          class="rounded-10"
+          class="rounded"
           color="secondary"
-          :label="lang.filter"
+          :label="t('filter')"
         >
           <q-menu class="no-shadow q-list--bordered non-selectable">
             <q-list dense separator style="max-width: 200px">
@@ -47,9 +47,9 @@
           no-caps
           v-if="filtered"
           icon="close"
-          class="rounded-10"
+          class="rounded"
           color="secondary"
-          :label="lang.clear"
+          :label="t('clear')"
           @click="data.nullifyFilter"
         />
       </div>
@@ -72,8 +72,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-import { useLang } from 'src/utils/useLang';
 import { useDataStore } from 'stores/data/dataStore';
 import { useStatesStore } from 'stores/states/statesStore';
 
@@ -82,7 +82,7 @@ import ChooseItem from 'components/menu/ChooseItem.vue';
 import { mdiCalendarClockOutline } from '@quasar/extras/mdi-v7';
 import { DefaultFilter } from 'stores/defaults';
 
-const lang = computed(() => useLang());
+const { t } = useI18n();
 const data = useDataStore();
 const states = useStatesStore();
 
@@ -93,25 +93,25 @@ const filtered = computed(
 
 const filtersMenu = computed(() => [
   {
-    label: lang.value.search_ip,
+    label: t('search_ip'),
     action: () => states.openDialog('ip_filter'),
     icon: 'alternate_email',
     close: true,
   },
   {
-    label: lang.value.search_date,
+    label: t('search_date'),
     action: () => states.openDialog('date_filter'),
     icon: 'calendar_month',
     close: true,
   },
   {
-    label: lang.value.search_active,
+    label: t('search_active'),
     action: () => data.findOrders('active', true),
     icon: 'notifications_active',
     close: true,
   },
   {
-    label: lang.value.search_end,
+    label: t('search_end'),
     action: () => data.findOrders('ended', true),
     icon: mdiCalendarClockOutline,
     close: true,
@@ -124,7 +124,7 @@ const filtersMenu = computed(() => [
   },
 
   {
-    label: lang.value.multiply,
+    label: t('multiply'),
     action: () => (data.multiply = !data.multiply),
     icon: data.multiply ? 'check_box' : 'check_box_outline_blank',
     close: false,
@@ -132,4 +132,4 @@ const filtersMenu = computed(() => [
 ]);
 </script>
 
-<style lang="scss" scoped></style>
+

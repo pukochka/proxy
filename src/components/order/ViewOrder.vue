@@ -5,13 +5,13 @@
     position="bottom"
     persistent
   >
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
         <q-toolbar-title class="row text-weight-bold items-center">
           <div class="">{{ version }}</div>
 
           <q-badge
-            class="q-pa-sm text-weight-bold q-ml-sm rounded-10"
+            class="q-pa-sm text-weight-bold q-ml-sm rounded"
             :color="status.color"
             text-color="white"
             :label="status.text"
@@ -20,7 +20,7 @@
 
         <q-btn
           flat
-          class="rounded-10"
+          class="rounded"
           size="md"
           color="secondary"
           icon="close"
@@ -42,7 +42,7 @@
 
           <div class="q-mr-sm" v-if="item.image">
             <q-img
-              class="rounded-10"
+              class="rounded"
               :src="item.image"
               spinner-color="secondary"
               style="height: 24px; width: 24px"
@@ -55,11 +55,11 @@
             v-if="item.change"
             no-caps
             unelevated
-            class="rounded-10 q-ml-sm"
+            class="rounded q-ml-sm"
             padding="4px"
             color="secondary"
             :loading="states.loadings.updateType"
-            :label="lang.change"
+            :label="t('change')"
             @click="states.openDialog('type_menu')"
           />
 
@@ -75,24 +75,24 @@
         <q-btn
           dense
           no-caps
-          class="rounded-10 col-12"
+          class="rounded col-12"
           unelevated
           size="md"
           color="secondary"
           :loading="loading.check"
-          :label="lang.check"
+          :label="t('check')"
           @click="checkProxy"
         />
 
         <q-btn
           dense
           no-caps
-          class="rounded-10 col-12"
+          class="rounded col-12"
           unelevated
           size="md"
           color="primary"
           :loading="loading.prolong"
-          :label="lang.prolong_proxy"
+          :label="t('prolong_proxy')"
           @click="prolongProxy"
         />
       </div>
@@ -103,19 +103,19 @@
 <script lang="ts" setup>
 import config from 'src/config';
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { date } from 'quasar';
 
 import { useStatesStore } from 'stores/states/statesStore';
 import { useDataStore } from 'stores/data/dataStore';
-import { useLang } from 'src/utils/useLang';
 
 import { fetchProxy } from 'boot/queries';
 
 import CopyButton from 'components/CopyButton.vue';
 
+const { t } = useI18n();
 const states = useStatesStore();
 const data = useDataStore();
-const lang = computed(() => useLang());
 
 const loading = ref({
   check: false,
@@ -125,16 +125,16 @@ const loading = ref({
 const status = computed(() =>
   data.selectedOrder.status_org === '1'
     ? {
-        text: lang.value.order_active,
+        text: t('order_active'),
         color: 'green',
       }
     : data.selectedOrder.status_org === '2'
     ? {
-        text: lang.value.order_ended,
+        text: t('order_ended'),
         color: 'warning',
       }
     : {
-        text: lang.value.order_delete,
+        text: t('order_delete'),
         color: 'red',
       }
 );
@@ -209,12 +209,12 @@ const info = computed((): InfoProps[] => [
     copy: true,
   },
   {
-    label: lang.value.login,
+    label: t('login'),
     value: data.selectedOrder.user,
     copy: true,
   },
   {
-    label: lang.value.password,
+    label: t('password'),
     value: data.selectedOrder.pass,
     copy: true,
   },
@@ -224,26 +224,26 @@ const info = computed((): InfoProps[] => [
     copy: true,
   },
   {
-    label: lang.value.type,
+    label: t('type'),
     value: type.value,
     change: true,
   },
   {
-    label: lang.value.country,
+    label: t('country'),
     value: country.value,
     image: data.selectedOrder.country.image,
   },
   {
-    label: lang.value.date,
+    label: t('date'),
     value: createAt.value,
   },
 
   {
-    label: lang.value.end,
+    label: t('end'),
     value: endAt.value,
   },
   {
-    label: lang.value.price,
+    label: t('price'),
     value: (data.selectedOrder.price / 100).toFixed(2) + ' ₽',
   },
 ]);
@@ -257,4 +257,4 @@ interface InfoProps {
 }
 </script>
 
-<style lang="scss" scoped></style>
+

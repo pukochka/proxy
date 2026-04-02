@@ -6,7 +6,7 @@
   >
     <div class="row no-wrap col-grow">
       <q-item-section class="items-center" avatar>
-        <q-avatar size="md" square class="rounded-10">
+        <q-avatar size="md" square class="rounded">
           <q-img :src="item.country.image" spinner-color="primary" />
         </q-avatar>
 
@@ -39,19 +39,18 @@
       <q-btn
         no-caps
         unelevated
-        class="rounded-10"
+        class="rounded"
         color="red"
-        :label="lang.delete"
+        :label="t('delete')"
         @click="data.deleteProxy(item.order_org_id)"
       />
 
       <q-btn
         no-caps
         unelevated
-        class="rounded-10"
-        size="md"
+        class="rounded"
         color="secondary"
-        :label="lang.details"
+        :label="t('details')"
         @click="openDetails"
       />
     </div>
@@ -60,20 +59,20 @@
 
 <script lang="ts" setup>
 import { computed, defineProps } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { defaultProxyOrder } from 'stores/defaults';
 import { date } from 'quasar';
 
 import { useStatesStore } from 'stores/states/statesStore';
 import { useDataStore } from 'stores/data/dataStore';
-import { useLang } from 'src/utils/useLang';
 
 const props = withDefaults(defineProps<OrderItemProps>(), {
   item: () => defaultProxyOrder,
 });
 
+const { t } = useI18n();
 const states = useStatesStore();
 const data = useDataStore();
-const lang = computed(() => useLang());
 
 const version = computed(() =>
   props.item.proxy === '3'
@@ -101,17 +100,17 @@ const openDetails = () => {
 
 const info = computed(() => [
   {
-    label: lang.value.date,
+    label: t('date'),
     value: createAt.value,
   },
 
   {
-    label: lang.value.end,
+    label: t('end'),
     value: endAt.value,
   },
 
   {
-    label: lang.value.price,
+    label: t('price'),
     value: (props.item.price / 100).toFixed(2) + ' ₽',
   },
 ]);
@@ -121,4 +120,4 @@ interface OrderItemProps {
 }
 </script>
 
-<style lang="scss" scoped></style>
+

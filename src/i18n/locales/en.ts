@@ -71,11 +71,12 @@ export default {
   support_all: 'Suitable for all sites',
   used_many: 'Use up to 3 people',
   used_once: 'Issued once',
+  telegramOnly: 'Telegram Only',
 
   create_order: 'Create order',
 
   check_success: 'The proxy is working!',
-  success: 'Successfully purchased ',
+  success_purchase: 'Successfully purchased {count} Proxy!',
   check_fail: 'Proxy is over or not working(',
 
   order_warning: "You don't have any orders yet",

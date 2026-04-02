@@ -8,7 +8,7 @@
 
     <div class="q-mr-sm" v-if="item.icon">
       <q-img
-        class="rounded-10"
+        class="rounded"
         :src="item.icon"
         spinner-color="primary"
         style="height: 24px; width: 24px"
@@ -23,27 +23,26 @@
       dense
       no-caps
       unelevated
-      class="rounded-10 q-ml-sm col"
+      class="rounded q-ml-sm col"
       color="secondary"
-      :label="lang.change"
+      :label="t('change')"
       @click="open"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { defaultSettingsItem } from 'src/stores/defaults';
 import { useStatesStore } from 'stores/states/statesStore';
-import { useLang } from 'src/utils/useLang';
 
 const props = withDefaults(defineProps<SettingItemProps>(), {
   item: () => defaultSettingsItem,
 });
 
+const { t } = useI18n();
 const states = useStatesStore();
-const lang = computed(() => useLang());
 
 const open = () => {
   if (props.item.menu === '') return;
@@ -56,4 +55,4 @@ interface SettingItemProps {
 }
 </script>
 
-<style lang="scss" scoped></style>
+

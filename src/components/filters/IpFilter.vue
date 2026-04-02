@@ -1,14 +1,14 @@
 <template>
   <q-dialog @before-show="update" v-model="states.dialogs.ip_filter">
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
         <q-toolbar-title class="text-weight-bold">
-          {{ lang.search_ip }}
+          {{ t('search_ip') }}
         </q-toolbar-title>
 
         <q-btn
           flat
-          class="rounded-10"
+          class="rounded"
           size="md"
           color="secondary"
           icon="close"
@@ -22,7 +22,7 @@
           dense
           no-caps
           v-model="filterIp"
-          class="rounded-10 q-px-md"
+          class="rounded q-px-md"
           :class="[states.itemBackgroundClass]"
           placeholder="IP Proxy"
           borderless
@@ -33,9 +33,9 @@
         <q-btn
           unelevated
           dense
-          class="rounded-10 col"
+          class="rounded col"
           color="secondary"
-          :label="lang.find"
+          :label="t('find')"
           @click="findOrder"
           v-close-popup
         />
@@ -45,14 +45,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
 import { useStatesStore } from 'stores/states/statesStore';
-import { useLang } from 'src/utils/useLang';
 import { useDataStore } from 'stores/data/dataStore';
 
+const { t } = useI18n();
 const states = useStatesStore();
 const data = useDataStore();
-const lang = computed(() => useLang());
 
 const filterIp = ref('');
 
@@ -69,4 +70,4 @@ const update = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+

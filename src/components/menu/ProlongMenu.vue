@@ -1,14 +1,14 @@
 <template>
   <q-dialog v-model="states.dialogs.prolong_menu">
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
         <q-toolbar-title class="text-weight-bold text-center">
-          {{ lang.select_prolog }}
+          {{ t('select_prolog') }}
         </q-toolbar-title>
       </q-toolbar>
 
       <q-card-section class="q-pt-none">
-        <q-list separator dense bordered class="rounded-10 overflow-hidden">
+        <q-list separator dense bordered class="rounded overflow-hidden">
           <q-item
             tag="label"
             v-for="([key, value], index) of data.prolongRange"
@@ -35,7 +35,7 @@
 
       <q-card-section class="q-pt-none">
         <div class="row no-wrap items-end text-size-16">
-          <div class="text-size-16 text-weight-bold">{{ lang.result }}</div>
+          <div class="text-size-16 text-weight-bold">{{ t('result') }}</div>
 
           <div class="col-grow q-mx-sm relative-position">
             <div class="dashed-line"></div>
@@ -49,9 +49,9 @@
             dense
             unelevated
             no-caps
-            class="rounded-10 col"
+            class="rounded col"
             color="secondary"
-            :label="lang.prolong"
+            :label="t('prolong')"
             :loading="loading.prolong"
             @click="prolong"
           />
@@ -67,17 +67,17 @@
 
 <script lang="ts" setup>
 import config from 'src/config';
-import { computed, ref } from 'vue';
+import { ref ,computed} from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { useStatesStore } from 'stores/states/statesStore';
 import { useDataStore } from 'stores/data/dataStore';
 
 import { fetchProxy } from 'boot/queries';
-import { useLang } from 'src/utils/useLang';
 
+const { t } = useI18n();
 const states = useStatesStore();
 const data = useDataStore();
-const lang = computed(() => useLang());
 
 const selected = ref('30');
 const loading = ref({
@@ -116,4 +116,4 @@ const prolong = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+

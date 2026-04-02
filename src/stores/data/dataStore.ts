@@ -11,15 +11,14 @@ import {
   DefaultFilter,
 } from 'stores/defaults';
 
-import ruScheme from 'src/utils/lang/ru';
-import enScheme from 'src/utils/lang/en';
 import { Quasar } from 'quasar';
 
 import langEn from 'quasar/lang/en-GB';
 import langRu from 'quasar/lang/ru';
 
+import { i18n, proxyLanguageToLocale } from 'src/i18n';
+
 import { useDialog } from 'src/utils/useDialog';
-import { useLang } from 'src/utils/useLang';
 
 import { fetchProxy } from 'boot/queries';
 
@@ -88,22 +87,14 @@ export const useDataStore = defineStore('data', {
         ),
     /*  */
     dateRange: (state) => {
-      const scheme =
-        state.userValue.language === 'ru'
-          ? ruScheme.dateRange
-          : enScheme.dateRange;
-
+      const scheme = i18n.global.tm('dateRange') as Record<string, string>;
       return Object.entries(scheme).filter((_, index) =>
         state.selected.title.includes('IPv4') ? index > 2 : _
       );
     },
 
     prolongRange: (state) => {
-      const scheme =
-        state.userValue.language === 'ru'
-          ? ruScheme.dateRange
-          : enScheme.dateRange;
-
+      const scheme = i18n.global.tm('dateRange') as Record<string, string>;
       return Object.entries(scheme).filter((_, index) =>
         state.selectedOrder.proxy === '6' ? _ : index > 2
       );
@@ -118,6 +109,7 @@ export const useDataStore = defineStore('data', {
     },
     setUser(value: ProxyUser) {
       this.userValue = value;
+      i18n.global.locale.value = proxyLanguageToLocale(this.userValue.language);
       Quasar.lang.set(this.userValue.language === 'ru' ? langRu : langEn);
     },
 
@@ -126,9 +118,7 @@ export const useDataStore = defineStore('data', {
     },
 
     deleteProxy(id: string) {
-      const lang = useLang();
-
-      useDialog(lang.delete_warning).onOk(() => {
+      useDialog(i18n.global.t('delete_warning')).onOk(() => {
         fetchProxy('deleteProxy', {
           order_org_id: id,
           user_id: this.userValue.id,

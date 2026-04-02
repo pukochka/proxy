@@ -1,5 +1,12 @@
+@import '../assets/fonts/fonts.css';
+
 body {
-  font-family: 'Yandex Sans Text', serif !important;
+  -ms-scroll-chaining: none;
+  overscroll-behavior: none;
+  font-family: 'Geometria', serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 ::-webkit-scrollbar-button,
@@ -21,6 +28,11 @@ body {
   width: 8px;
   height: 8px;
   background-color: transparent;
+}
+
+.bg-blur {
+  backdrop-filter: blur(2px); /* Размытие фона */
+  -webkit-backdrop-filter: blur(2px); /* Для Safari */
 }
 
 .q-menu {
@@ -112,6 +124,6 @@ body {
   letter-spacing: 4.5px !important;
 }
 
-.rounded-10 {
+.rounded {
   border-radius: 10px !important;
 }

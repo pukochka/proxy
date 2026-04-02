@@ -1,25 +1,24 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-transparent z-header">
-      <div class="">
-        <q-tabs
-          inline-label
-          v-model="states.tab"
-          class="bg-transparent"
-          :class="[config.dark ? ' text-secondary' : ' text-primary']"
+      <q-tabs
+        inline-label
+        align="justify"
+        class="bg-transparent"
+        :class="[config.dark ? ' text-secondary' : ' text-primary']"
+        v-model="states.tab"
+      >
+        <q-tab
+          no-caps
+          class="text-weight-bold q-px-none"
+          :key="index"
+          :name="tab.name"
+          :icon="tab.icon"
+          :label="tab.label"
+          v-for="(tab, index) in headerTabs"
         >
-          <q-tab
-            class="rounded-10 q-px-none"
-            no-caps
-            :name="tab.name"
-            :icon="tab.icon"
-            :label="tab.label"
-            v-for="(tab, index) in headerTabs"
-            :key="index"
-          >
-          </q-tab>
-        </q-tabs>
-      </div>
+        </q-tab>
+      </q-tabs>
     </q-header>
 
     <q-page-container class="z-page relative-position">
@@ -31,9 +30,9 @@
     </div>
 
     <q-inner-loading :showing="states.loadings.init" class="z-marginals">
-      <q-spinner-rings class="" color="primary" size="10em" />
+      <q-spinner-rings class="" color="primary" size="180px" />
 
-      <div class="text-body1">{{ lang.loading }}</div>
+      <div class="text-body1">{{ t('loading') }}</div>
     </q-inner-loading>
 
     <count-menu></count-menu>
@@ -62,8 +61,9 @@
 import config from 'src/config';
 import { headerTabs } from 'assets/content';
 
+import { useI18n } from 'vue-i18n';
+
 import { useStatesStore } from 'stores/states/statesStore';
-import { useLang } from 'src/utils/useLang';
 
 import ProxyStars from 'components/ProxyStars.vue';
 
@@ -80,7 +80,7 @@ import DateFilter from 'components/filters/DateFilter.vue';
 import IpFilter from 'components/filters/IpFilter.vue';
 import TypeFilter from 'components/filters/TypeFilter.vue';
 
-const lang = useLang();
+const { t } = useI18n();
 const states = useStatesStore();
 </script>
 

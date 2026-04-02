@@ -6,7 +6,7 @@
     @before-show="update"
     @hide="update"
   >
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
         <q-toolbar-title class="text-weight-bold">
           {{ data.selected.title }}
@@ -14,7 +14,7 @@
 
         <q-btn
           flat
-          class="rounded-10"
+          class="rounded"
           size="md"
           color="secondary"
           icon="close"
@@ -31,10 +31,10 @@
       </q-card-section>
 
       <q-card-section class="q-py-sm">
-        <div class="text-size-16 q-py-sm">{{ lang.type }}</div>
+        <div class="text-size-16 q-py-sm">{{ t('type') }}</div>
 
         <div class="row">
-          <q-item tag="label" dense class="col rounded-10">
+          <q-item tag="label" dense class="col rounded">
             <q-radio
               v-model="type"
               color="secondary"
@@ -43,7 +43,7 @@
             />
           </q-item>
 
-          <q-item tag="label" dense class="col rounded-10">
+          <q-item tag="label" dense class="col rounded">
             <q-radio
               v-model="type"
               color="secondary"
@@ -58,7 +58,7 @@
         <q-card-section class="q-py-sm">
           <div class="" v-if="data.range.max > 0">
             <div class="row no-wrap items-end text-size-16">
-              <div class="text-size-16 text-weight-bold">{{ lang.result }}</div>
+              <div class="text-size-16 text-weight-bold">{{ t('result') }}</div>
 
               <div class="col-grow q-mx-sm relative-position">
                 <div class="dashed-line"></div>
@@ -69,7 +69,7 @@
           </div>
 
           <div class="text-center" v-else>
-            {{ lang.range_warning }}
+            {{ t('range_warning') }}
           </div>
         </q-card-section>
 
@@ -77,10 +77,10 @@
           <q-btn
             unelevated
             no-caps
-            class="col rounded-10"
+            class="col rounded"
             size="md"
             :disable="states.loadings.getPrice || data.range.max <= 0"
-            :label="lang.create_order"
+            :label="t('create_order')"
             :loading="loading"
             color="secondary"
             @click="createOrder"
@@ -100,10 +100,10 @@
 <script lang="ts" setup>
 import config from 'src/config';
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { useStatesStore } from 'stores/states/statesStore';
 import { useDataStore } from 'stores/data/dataStore';
-import { useLang } from 'src/utils/useLang';
 
 import { fetchProxy } from 'boot/queries';
 
@@ -111,9 +111,9 @@ import { russiaCountry } from 'stores/defaults';
 
 import SettingItem from 'components/SettingItem.vue';
 
+const { t } = useI18n();
 const states = useStatesStore();
 const data = useDataStore();
-const lang = computed(() => useLang());
 
 const type = ref('http');
 const loading = ref(false);
@@ -143,7 +143,7 @@ const createOrder = () => {
 
 const setting = computed(() => [
   {
-    label: lang.value.country,
+    label: t('country'),
     value:
       data.userValue.language === 'ru'
         ? data.selectedCountry.name_ru
@@ -152,16 +152,16 @@ const setting = computed(() => [
     icon: data.selectedCountry?.image,
   },
   {
-    label: lang.value.quantity,
+    label: t('quantity'),
     value: data.selectedCount,
     menu: 'count_menu',
   },
   {
-    label: lang.value.period,
+    label: t('period'),
     value: Object.fromEntries(data.dateRange)?.[data.selectedDate],
     menu: 'date_menu',
   },
 ]);
 </script>
 
-<style lang="scss" scoped></style>
+

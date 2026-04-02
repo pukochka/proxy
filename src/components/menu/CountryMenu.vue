@@ -4,7 +4,7 @@
     v-model="states.dialogs.country_menu"
     persistent
   >
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
         <q-toolbar-title class="text-weight-bold">
           {{ data.selected.title }}
@@ -12,7 +12,7 @@
 
         <q-btn
           flat
-          class="rounded-10"
+          class="rounded"
           size="md"
           color="secondary"
           icon="close"
@@ -23,10 +23,10 @@
       <q-card-section class="q-pt-none">
         <q-input
           dense
-          class="rounded-10 q-px-md q-my-sm"
+          class="rounded q-px-md q-my-sm"
           :class="[states.itemBackgroundClass]"
           v-model="search"
-          :placeholder="lang.search"
+          :placeholder="t('search')"
           borderless
         />
 
@@ -46,18 +46,18 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { useStatesStore } from 'stores/states/statesStore';
 import { useDataStore } from 'stores/data/dataStore';
-import { useLang } from 'src/utils/useLang';
 
 import ChooseItem from 'components/menu/ChooseItem.vue';
 import { fetchProxy } from 'boot/queries';
 import config from 'src/config';
 
+const { t } = useI18n();
 const data = useDataStore();
 const states = useStatesStore();
-const lang = computed(() => useLang());
 
 const search = ref('');
 const country = ref<ProxyCountry>(data.selectedCountry);
@@ -86,4 +86,4 @@ const update = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+

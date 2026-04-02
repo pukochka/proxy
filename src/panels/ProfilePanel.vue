@@ -1,14 +1,14 @@
 <template>
   <div class="q-gutter-y-md col">
     <div class="text-center text-size-30 text-weight-bold">
-      {{ lang.profile }}
+      {{ t('profile') }}
     </div>
 
     <div class="q-gutter-y-sm" v-if="data.systemUserValue.id !== 0">
       <q-list
         bordered
         separator
-        class="rounded-10 overflow-hidden"
+        class="rounded overflow-hidden"
         :id="item.id"
         v-for="(item, index) in content"
         :key="index"
@@ -16,7 +16,7 @@
         <q-item :class="[states.itemBackgroundClass]" :clickable="!!item.id">
           <q-item-section avatar>
             <q-avatar
-              class="rounded-10"
+              class="rounded"
               size="50px"
               font-size="32px"
               color="secondary"
@@ -38,7 +38,7 @@
       <q-menu
         fit
         target="#lang-menu"
-        class="no-shadow q-list--bordered rounded-10"
+        class="no-shadow q-list--bordered rounded"
         transition-hide="jump-up"
         transition-show="jump-down"
       >
@@ -47,9 +47,9 @@
             <q-item-section avatar>
               <q-avatar size="md" rounded>
                 <q-img
-                  :src="config.lang_icons_url + '0.svg'"
-                  spinner-color="primary"
                   spinner-size="82px"
+                  spinner-color="primary"
+                  src="https://avatars.mds.yandex.net/get-entity_search/118194/224019704/S600xU_2x"
                 />
               </q-avatar>
             </q-item-section>
@@ -65,9 +65,9 @@
             <q-item-section avatar>
               <q-avatar size="md" rounded>
                 <q-img
-                  :src="config.lang_icons_url + '12.svg'"
                   spinner-color="primary"
                   spinner-size="82px"
+                  src="https://avatars.mds.yandex.net/get-entity_search/5488405/551775463/S600xU_2x"
                 />
               </q-avatar>
             </q-item-section>
@@ -87,17 +87,17 @@
 <script lang="ts" setup>
 import config from 'src/config';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { mdiWallet } from '@quasar/extras/mdi-v7';
 
 import { fetchProxy } from 'boot/queries';
 
-import { useLang } from 'src/utils/useLang';
 import { useDataStore } from 'stores/data/dataStore';
 import { useStatesStore } from 'stores/states/statesStore';
 
+const { t } = useI18n();
 const data = useDataStore();
 const states = useStatesStore();
-const lang = computed(() => useLang());
 
 const languageText = computed(() =>
   data.userValue.language === 'ru' ? 'Русский' : 'English'
@@ -113,7 +113,7 @@ const changeLanguage = (lang: 'ru' | 'eng') => {
 
 const content = computed(() => [
   {
-    label: lang.value.user,
+    label: t('user'),
     icon: 'person',
     value:
       data.systemUserValue.user.first_name +
@@ -122,18 +122,16 @@ const content = computed(() => [
     id: null,
   },
   {
-    label: lang.value.wallet,
+    label: t('wallet'),
     icon: mdiWallet,
     value: (data.systemUserValue.money / 100).toFixed(2) + ' ₽',
     id: null,
   },
   {
-    label: lang.value.language,
+    label: t('language'),
     icon: 'language',
     value: languageText.value,
     id: 'lang-menu',
   },
 ]);
 </script>
-
-<style lang="scss" scoped></style>

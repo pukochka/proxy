@@ -71,11 +71,12 @@ export default {
   support_all: 'Подходят для всех сайтов',
   used_many: 'Используют до 3-х человек',
   used_once: 'Выдаются в одни руки',
+  telegramOnly: 'Только Telegram',
 
   create_order: 'Создать заказ',
 
   check_success: 'Proxy работает!',
-  success: 'Успешно куплено ',
+  success_purchase: 'Успешно куплено {count} Proxy!',
   check_fail: 'Proxy закончился или не работает(',
 
   order_warning: 'У Вас пока нет заказов',

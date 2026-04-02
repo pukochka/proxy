@@ -6,26 +6,20 @@
 
     <proxy-item
       v-else
-      class="col-10"
-      v-for="item of data.proxies"
+      v-for="(item, index) of data.proxies"
       :key="item"
       :item="item"
-    ></proxy-item>
+      :gradient-variant="index % 4"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-
 import { useDataStore } from 'stores/data/dataStore';
 import { useStatesStore } from 'stores/states/statesStore';
-import { useLang } from 'src/utils/useLang';
 
 import ProxyItem from 'components/items/ProxyItem.vue';
 
 const data = useDataStore();
 const states = useStatesStore();
-const lang = computed(() => useLang());
 </script>
-
-<style lang="scss" scoped></style>

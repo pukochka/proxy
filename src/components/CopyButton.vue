@@ -1,7 +1,7 @@
 <template>
   <q-btn
     unelevated
-    class="rounded-10"
+    class="rounded"
     padding="4px 8px"
     color="secondary"
     :icon="state ? 'check' : 'content_copy'"
@@ -10,16 +10,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { copyToClipboard, Notify } from 'quasar';
-import { useLang } from 'src/utils/useLang';
 
 const props = withDefaults(defineProps<Props>(), {
   text: () => '',
 });
 
+const { t } = useI18n();
 const state = ref(false);
-const lang = computed(() => useLang());
 
 const copy = () => {
   state.value = true;
@@ -27,9 +27,9 @@ const copy = () => {
   copyToClipboard(props.text);
 
   Notify.create({
-    message: lang.value.copied,
+    message: t('copied'),
     position: 'top',
-    classes: 'rounded-10',
+    classes: 'rounded',
     timeout: 500,
   });
 
@@ -41,4 +41,4 @@ interface Props {
 }
 </script>
 
-<style lang="scss" scoped></style>
+

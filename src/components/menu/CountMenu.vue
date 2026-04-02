@@ -1,6 +1,6 @@
 <template>
   <q-dialog @before-show="update" v-model="states.dialogs.count_menu">
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
         <q-toolbar-title class="text-weight-bold text-center">
           {{ data.selected.title }}
@@ -10,7 +10,7 @@
       <q-card-section class="q-pt-none" style="min-height: 150px">
         <div class="" v-if="data.range.max >= 1 && loading === false">
           <q-item-label header class="text-center text-size-16">
-            {{ lang.quantity }}
+            {{ t('quantity') }}
           </q-item-label>
 
           <q-slider
@@ -27,7 +27,7 @@
               v-touch-repeat:0:200.mouse.enter.space="decrease"
               flat
               size="lg"
-              class="rounded-10"
+              class="rounded"
               color="secondary"
               icon="remove"
               @click="decrease"
@@ -39,7 +39,7 @@
               v-touch-repeat:0:200.mouse.enter.space="increase"
               flat
               size="lg"
-              class="rounded-10"
+              class="rounded"
               color="secondary"
               icon="add"
               @click="increase"
@@ -51,7 +51,7 @@
           class="q-py-xl text-center"
           v-if="loading === false && data.range.max < 1"
         >
-          {{ lang.range_warning }}
+          {{ t('range_warning') }}
         </div>
 
         <q-inner-loading :showing="loading" class="z-max">
@@ -64,10 +64,10 @@
           v-if="data.range.max >= 1 && loading === false"
           no-caps
           unelevated
-          class="col rounded-10"
+          class="col rounded"
           size="md"
           color="secondary"
-          :label="lang.apply"
+          :label="t('apply')"
           @click="select"
           v-close-popup
         />
@@ -76,10 +76,10 @@
           v-if="data.range.max < 1 && loading === false"
           no-caps
           unelevated
-          class="col rounded-10"
+          class="col rounded"
           size="md"
           color="secondary"
-          :label="lang.close"
+          :label="t('close')"
           v-close-popup
         />
       </div>
@@ -89,17 +89,17 @@
 
 <script lang="ts" setup>
 import config from 'src/config';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { fetchProxy } from 'boot/queries';
 
 import { useStatesStore } from 'stores/states/statesStore';
 import { useDataStore } from 'stores/data/dataStore';
-import { useLang } from 'src/utils/useLang';
 
+const { t } = useI18n();
 const states = useStatesStore();
 const data = useDataStore();
-const lang = computed(() => useLang());
 
 const count = ref(1);
 const loading = ref(false);
@@ -140,4 +140,4 @@ const update = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+

@@ -1,33 +1,56 @@
 <template>
   <q-item
-    class="rounded-10 q-list--bordered"
-    :class="[states.itemBackgroundClass]"
+    class="rounded q-list--bordered bg-blur proxy-item-card"
+    :class="glowModifierClass"
   >
-    <q-item-section class="q-gutter-y-sm">
-      <q-item-label class="text-center text-size-24 text-weight-bold">
+    <q-item-section class="q-gutter-y-sm proxy-item-card__content">
+      <q-item-label class="text-center text-h5 text-weight-bold">
         {{ item.title }}
       </q-item-label>
 
       <div
-        class="q-list--bordered q-px-xs rounded-10 text-size-13 text-weight-bold relative-position overflow-hidden"
-        v-for="(item, index) in info"
-        :key="index"
+        class="text-weight-bold text-caption text-center"
+        v-if="props.item.title.includes('v6')"
       >
-        <div class="opacity-5 absolute-full" :class="[item.class]"></div>
+        {{ t('support_ipv6') }}
+      </div>
 
-        <div class="relative-position text-center">
-          {{ item.label }}
-        </div>
+      <div
+        v-else-if="
+          !props.item.title.includes('v6') &&
+          !props.item.title.includes('MTproto')
+        "
+        class="text-weight-bold text-caption text-center"
+      >
+        {{ t('support_all') }}
+      </div>
+
+      <div
+        class="text-weight-bold text-caption text-center"
+        v-if="props.item.title.includes('MTproto')"
+      >
+        {{ t('telegramOnly') }}
+      </div>
+
+      <div
+        class="text-weight-bold text-caption text-center"
+        v-if="props.item.title.includes('Shared')"
+      >
+        {{ t('used_many') }}
+      </div>
+
+      <div v-else class="text-weight-bold text-caption text-center">
+        {{ t('used_once') }}
       </div>
     </q-item-section>
 
-    <q-item-section side>
+    <q-item-section side class="proxy-item-card__content">
       <q-btn
+        no-caps
         unelevated
-        size="md"
-        class="rounded-10 fit"
         color="secondary"
-        :label="lang.buy"
+        class="rounded fit"
+        :label="t('buy')"
         :loading="loading"
         @click="select"
       />
@@ -38,45 +61,26 @@
 <script lang="ts" setup>
 import config from 'src/config';
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { defaultProxyItem } from 'stores/defaults';
 import { useDataStore } from 'stores/data/dataStore';
-import { useLang } from 'src/utils/useLang';
 import { fetchProxy } from 'boot/queries';
-import { useStatesStore } from 'stores/states/statesStore';
 
 const props = withDefaults(defineProps<ProxyItemProps>(), {
   item: () => defaultProxyItem,
 });
 
+const glowModifierClass = computed(() =>
+  props.gradientVariant === undefined
+    ? ''
+    : `proxy-item-card--glow proxy-item-card--g${props.gradientVariant % 4}`
+);
+
+const { t } = useI18n();
 const data = useDataStore();
-const states = useStatesStore();
-const lang = computed(() => useLang());
 
 const loading = ref(false);
-
-const support = computed(() =>
-  props.item.title.includes('v6')
-    ? lang.value.support_ipv6
-    : lang.value.support_all
-);
-
-const used = computed(() =>
-  props.item.title.includes('Shared')
-    ? lang.value.used_many
-    : lang.value.used_once
-);
-
-const info = [
-  {
-    label: support.value,
-    class: props.item.title.includes('IPv6') ? 'bg-warning ' : 'bg-secondary',
-  },
-  {
-    label: used.value,
-    class: props.item.title.includes('Shared') ? 'bg-warning' : 'bg-secondary',
-  },
-];
 
 const select = () => {
   data.select(props.item);
@@ -104,10 +108,61 @@ const select = () => {
 
 interface ProxyItemProps {
   item: ProxyItem;
+  gradientVariant?: number;
 }
 </script>
 
 <style lang="scss" scoped>
+.proxy-item-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.proxy-item-card--glow::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 85%;
+  height: 70%;
+  top: -15%;
+  right: -20%;
+  opacity: 0.38;
+  filter: blur(36px);
+  transform: translateZ(0);
+  background: linear-gradient(
+    125deg,
+    var(--proxy-g-a) 0%,
+    var(--proxy-g-b) 55%,
+    transparent 100%
+  );
+}
+
+.proxy-item-card--g0 {
+  --proxy-g-a: #8b9cff;
+  --proxy-g-b: #5ee7df;
+}
+
+.proxy-item-card--g1 {
+  --proxy-g-a: #f0abfc;
+  --proxy-g-b: #fda4af;
+}
+
+.proxy-item-card--g2 {
+  --proxy-g-a: #c4b5fd;
+  --proxy-g-b: #93c5fd;
+}
+
+.proxy-item-card--g3 {
+  --proxy-g-a: #86efac;
+  --proxy-g-b: #5eead4;
+}
+
+.proxy-item-card__content {
+  position: relative;
+  z-index: 1;
+}
+
 .z-absolute {
   z-index: 0;
 }

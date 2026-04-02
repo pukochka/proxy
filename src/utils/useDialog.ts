@@ -1,15 +1,14 @@
 import { Dialog } from 'quasar';
-import { useLang } from 'src/utils/useLang';
+
+import { i18n } from 'src/i18n';
 
 export function useDialog(message: string, error?: boolean) {
-  const lang = useLang();
-
   const buttons = error
     ? {
         ok: {
           noCaps: true,
           label: 'OK',
-          class: 'rounded-10',
+          class: 'rounded',
           unelevated: true,
           color: 'secondary',
         },
@@ -17,15 +16,15 @@ export function useDialog(message: string, error?: boolean) {
     : {
         ok: {
           noCaps: true,
-          label: lang.confirm,
-          class: 'rounded-10',
+          label: i18n.global.t('confirm'),
+          class: 'rounded',
           unelevated: true,
           color: 'red',
         },
         cancel: {
           noCaps: true,
-          label: lang.cancel,
-          class: 'rounded-10',
+          label: i18n.global.t('cancel'),
+          class: 'rounded',
           color: 'secondary',
           unelevated: true,
         },
@@ -33,7 +32,7 @@ export function useDialog(message: string, error?: boolean) {
 
   return Dialog.create({
     message: message,
-    class: 'rounded-10',
+    class: 'rounded',
     html: true,
     ...buttons,
   });

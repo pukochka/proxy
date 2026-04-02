@@ -1,8 +1,8 @@
 <template>
   <q-dialog @before-show="update" v-model="states.dialogs.type_menu">
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-card-section>
-        <q-list separator dense bordered class="rounded-10 overflow-hidden">
+        <q-list separator dense bordered class="rounded overflow-hidden">
           <q-item
             tag="label"
             v-for="(item, index) of types"
@@ -76,4 +76,4 @@ const types = [
 ];
 </script>
 
-<style lang="scss" scoped></style>
+

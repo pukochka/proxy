@@ -1,6 +1,6 @@
 <template>
   <q-dialog @before-show="update" v-model="states.dialogs.date_menu">
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
         <q-toolbar-title class="text-weight-bold text-center">
           {{ data.selected.title }}
@@ -8,7 +8,7 @@
       </q-toolbar>
 
       <q-card-section class="q-pt-none">
-        <q-list separator dense bordered class="rounded-10 overflow-hidden">
+        <q-list separator dense bordered class="rounded overflow-hidden">
           <q-item
             tag="label"
             v-for="([key, value], index) of data.dateRange"
@@ -77,4 +77,4 @@ const update = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+

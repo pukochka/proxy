@@ -4,13 +4,13 @@
     v-model="states.dialogs.date_filter"
     :full-height="height"
   >
-    <q-card style="width: 100%" class="rounded-10" flat bordered>
+    <q-card style="width: 100%" class="rounded" flat bordered>
       <q-card-section class="q-pb-none">
         <q-date
-          :subtitle="lang.selectRange"
+          :subtitle="t('selectRange')"
           flat
           color="secondary"
-          class="fit rounded-10"
+          class="fit rounded"
           v-model="model"
           range
         />
@@ -21,9 +21,9 @@
           unelevated
           dense
           no-caps
-          class="rounded-10 col"
+          class="rounded col"
           color="secondary"
-          :label="lang.findDate"
+          :label="t('findDate')"
           @click="findOrders"
           v-close-popup
         />
@@ -34,15 +34,15 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { useStatesStore } from 'stores/states/statesStore';
 import { useQuasar } from 'quasar';
-import { useLang } from 'src/utils/useLang';
 import { useDataStore } from 'stores/data/dataStore';
 
+const { t } = useI18n();
 const states = useStatesStore();
 const data = useDataStore();
-const lang = computed(() => useLang());
 const quasar = useQuasar();
 
 const model = ref<{ from: number; to: number } | null>(null);
@@ -67,4 +67,4 @@ const update = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+

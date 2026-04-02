@@ -1,195 +1,213 @@
 import config from 'src/config';
-
-import { bott, proxy } from 'boot/interceptor';
+import { ProxyService } from 'src/api/services/proxyService';
+import { BottCheckHashService } from 'src/api/services/bottCheckHashService';
 import { useDataStore } from 'stores/data/dataStore';
-
-import { getHash } from 'src/utils/string';
 import { useStatesStore } from 'stores/states/statesStore';
 import { LocalStorage, Notify, setCssVar } from 'quasar';
-
-import { useLang } from 'src/utils/useLang';
-
+import { i18n } from 'src/i18n';
 import { colors } from 'src/utils/colors';
+import { assertNever } from 'src/utils/assertNever';
 
-export async function fetchProxy<Q extends ProxyQueries>(
-  query: Q,
-  params?: ProxyParams<Q>,
-  open?: boolean
+async function runFetchProxy(
+  query: ProxyQueries,
+  params: ProxyParams<ProxyQueries> | undefined,
+  open?: boolean,
 ) {
   const data = useDataStore();
   const states = useStatesStore();
-  const lang = useLang();
-
   try {
-    return await proxy({ url: query, params: params }).then((response) => {
-      /** */
-      if (query === 'getProxy') {
-        /** */
-
-        data.setProxy(response.data.data);
-
+    switch (query) {
+      case 'getProxy': {
+        const list = await ProxyService.getProxy(
+          params as ProxyGetProxyParams,
+        );
+        data.setProxy(list);
         states.loadings.init = false;
+        break;
+      }
 
-        /** */
-      } else if (query === 'getUser') {
-        /** */
-
-        data.setUser(response.data.data);
-
-        fetchProxy('getProxy', { public_key: config.public_key });
-        fetchProxy('getOrders', {
+      case 'getUser': {
+        const user = await ProxyService.getUser(params as ProxyGetUserParams);
+        data.setUser(user);
+        await fetchProxy('getProxy', { public_key: config.public_key });
+        await fetchProxy('getOrders', {
           user_id: data.userValue.id,
           public_key: config.public_key,
           user_secret_key: data.systemUserValue.secret_user_key,
         });
+        break;
+      }
 
-        /** */
-      } else if (query === 'getOrders') {
-        /** */
+      case 'getOrders': {
+        const orders = await ProxyService.getOrders(
+          params as ProxyGetOrdersParams,
+        );
+        data.ordersValue = orders ?? [];
+        break;
+      }
 
-        data.ordersValue = response.data.data ?? [];
-
-        /** */
-      } else if (query === 'buyProxy') {
-        /** */
-
+      case 'buyProxy': {
+        const created = await ProxyService.buyProxy(
+          params as ProxyBuyProxyParams,
+        );
         states.closeDialog('build');
-        fetchProxy('getOrders', {
+        await fetchProxy('getOrders', {
           user_id: data.userValue.id,
           public_key: config.public_key,
           user_secret_key: data.systemUserValue.secret_user_key,
         });
         Notify.create({
-          message: lang.success + data.payment.count.toString() + ' Proxy!',
+          message: i18n.global.t('success_purchase', {
+            count: data.payment.count,
+          }),
           position: 'top',
-          classes: 'rounded-10',
+          classes: 'rounded',
           textColor: 'white',
           timeout: 2000,
         });
         states.tab = 'orders';
-
-        const createdOrder = response.data.data?.[0]
-
-        if (createdOrder) {
-          data.selectedOrder = response.data.data?.[0];
+        const first = created?.[0];
+        if (first) {
+          data.selectedOrder = first;
           states.openDialog('view');
         }
+        break;
+      }
 
-        /** */
-      } else if (query === 'prolongProxy') {
-        /** */
-
-        if (response.data.data) {
-          data.selectedOrder = response.data.data;
+      case 'prolongProxy': {
+        const order = await ProxyService.prolongProxy(
+          params as ProxyProlongProxyParams,
+        );
+        if (order) {
+          data.selectedOrder = order;
         }
+        break;
+      }
 
-        /** */
-      } else if (query === 'getCount') {
-        /** */
+      case 'getCount': {
+        const count = await ProxyService.getCount(
+          params as ProxyGetCountParams,
+        );
+        data.range.max = count ?? 0;
+        if (open) {
+          states.openDialog('build');
+        }
+        break;
+      }
 
-        data.range.max = response.data.data ?? 0;
-
-        if (open) states.openDialog('build');
-
-        /** */
-      } else if (query === 'getPrice') {
-        /** */
-
-        data.payment = response.data.data ?? {
+      case 'getPrice': {
+        const quote = await ProxyService.getPrice(
+          params as ProxyGetPriceParams,
+        );
+        data.payment = quote ?? {
           period: 30,
           price: 0,
           price_single: 0,
           count: 0,
         };
-        if (open) states.openDialog('prolong_menu');
+        if (open) {
+          states.openDialog('prolong_menu');
+        }
+        break;
+      }
 
-        /** */
-      } else if (query === 'getOrders') {
-        /** */
+      case 'getCountry': {
+        const p = params as ProxyGetCountryParams;
+        const countries = (await ProxyService.getCountry(p)) ?? [];
+        const idx = data.proxiesValue.findIndex((x) => x.version === p.version);
+        if (idx >= 0) {
+          const next = [...data.proxiesValue];
+          next[idx] = { ...next[idx], countries };
+          data.setProxy(next);
+        }
+        if (data.selected.version === p.version) {
+          data.select({ ...data.selected, countries });
+        }
+        break;
+      }
 
-        data.ordersValue = response.data.data ?? [];
+      case 'updateType': {
+        await ProxyService.updateType(params as ProxyUpdateTypeParams);
+        data.selectedOrder.type =
+          (params as ProxyUpdateTypeParams).type ?? 'http';
+        break;
+      }
 
-        /** */
-      } else if (query === 'updateType') {
-        /** */
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        data.selectedOrder.type = params?.['type'] ?? 'http';
+      case 'setLanguage': {
+        const user = await ProxyService.setLanguage(
+          params as ProxySetLangParams,
+        );
+        data.setUser(user);
+        break;
+      }
 
-        /** */
-      } else if (query === 'setLanguage') {
-        /** */
-
-        data.setUser(response.data.data);
-
-        /** */
-      } else if (query === 'getSettings') {
-        /** */
-
+      case 'getSettings': {
+        const settingId = await ProxyService.getSettings(params as PublicKey);
         const color =
-          colors.find((item) => item.id === response.data.data) ?? colors[0];
-
+          colors.find((item) => item.id === Number(settingId)) ?? colors[0];
         setCssVar('primary', color.primary);
         setCssVar('secondary', color.secondary);
-
         LocalStorage.set('_bott-primary', color.primary);
         LocalStorage.set('_bott-secondary', color.secondary);
+        break;
+      }
 
-        /** */
-      } else if (query === 'deleteProxy') {
-        /** */
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const id = params?.['order_org_id'];
-
+      case 'deleteProxy': {
+        const p = params as ProxyCheckWorkParams;
+        await ProxyService.deleteProxy(p);
         data.ordersValue = data.ordersValue.filter(
-          (item) => item.order_org_id !== id ?? ''
+          (item) => item.order_org_id !== p.order_org_id,
         );
+        break;
+      }
 
-        /** */
-      } else if (query === 'checkWork') {
-        /** */
-
-        const color = response.data.data ? 'green' : 'red';
-
-        const message = response.data.data
-          ? lang.check_success
-          : lang.check_fail;
-
+      case 'checkWork': {
+        const ok = await ProxyService.checkWork(params as ProxyCheckWorkParams);
+        const color = ok ? 'green' : 'red';
+        const message = ok
+          ? i18n.global.t('check_success')
+          : i18n.global.t('check_fail');
         Notify.create({
-          message: message,
+          message,
           position: 'top',
-          classes: 'rounded-10',
-          color: color,
+          classes: 'rounded',
+          color,
           textColor: 'white',
           timeout: 2000,
         });
-
-        /** */
+        break;
       }
-      /** */
-    });
-  } catch (e) {}
+
+      default:
+        assertNever(query);
+    }
+  } catch {
+    /* intentional: preserve previous fire-and-forget behavior */
+  }
+}
+
+export async function fetchProxy<Q extends ProxyQueries>(
+  query: Q,
+  params?: ProxyParams<Q>,
+  open?: boolean,
+) {
+  return runFetchProxy(
+    query,
+    params as ProxyParams<ProxyQueries> | undefined,
+    open,
+  );
 }
 
 export async function fetchUser() {
   const data = useDataStore();
 
   try {
-    return await bott({
-      url: 'module/bot/check-hash',
-      data: {
-        bot_id: config.bot_id,
-        userData: getHash(),
-      },
-    }).then((response) => {
-      /** */
-
-      data.setSystemUser(response.data.data);
-
-      fetchProxy('getUser', { user_id: response.data.data.user.telegram_id });
-
-      /** */
+    const systemUser = await BottCheckHashService.checkHash();
+    data.setSystemUser(systemUser);
+    await fetchProxy('getUser', {
+      user_id: systemUser.user.telegram_id,
     });
-  } catch (e) {}
+  } catch {
+    /* intentional */
+  }
 }

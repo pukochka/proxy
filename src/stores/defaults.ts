@@ -1,28 +1,28 @@
-const defaultUser: ProxyUser = {
+export const defaultUser: ProxyUser = {
   id: 0,
   language: 'ru',
 };
 
-const defaultProxyItem: ProxyItem = {
+export const defaultProxyItem: ProxyItem = {
   title: '',
   version: '',
   countries: [],
 };
 
-const defaultProxyCountry: ProxyCountry = {
+export const defaultProxyCountry: ProxyCountry = {
   name_ru: '',
   name_en: '',
   org_id: '',
   image: '',
 };
 
-const defaultSettingsItem: SettingItemInstance = {
+export const defaultSettingsItem: SettingItemInstance = {
   label: '',
   value: '',
   menu: 'count_menu',
 };
 
-const defaultSystemUser: SystemUser = {
+export const defaultSystemUser: SystemUser = {
   id: 0,
   bot_id: 0,
   user: {
@@ -42,7 +42,7 @@ const defaultSystemUser: SystemUser = {
   secret_user_key: '',
 };
 
-const russiaCountry: ProxyCountry = {
+export const russiaCountry: ProxyCountry = {
   org_id: 'ru',
   name_ru: 'Россия',
   name_en: 'Russia',
@@ -50,7 +50,7 @@ const russiaCountry: ProxyCountry = {
     '//upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/22px-Flag_of_Russia.svg.png',
 };
 
-const defaultProxyOrder: ProxyOrder = {
+export const defaultProxyOrder: ProxyOrder = {
   order_org_id: '',
   proxy: '',
   country: defaultProxyCountry,
@@ -62,11 +62,11 @@ const defaultProxyOrder: ProxyOrder = {
   pass: '',
   type: '',
   ip: '',
-  start_time: 1683544062,
-  end_time: 1683803262,
+  start_time: 0,
+  end_time: 0,
 };
 
-class DefaultFilter {
+export class DefaultFilter {
   active: boolean;
   date: { from: number; to: number } | null;
   ended: boolean;
@@ -81,14 +81,3 @@ class DefaultFilter {
     this.date = null;
   }
 }
-
-export {
-  defaultUser,
-  defaultSystemUser,
-  defaultSettingsItem,
-  defaultProxyItem,
-  defaultProxyCountry,
-  russiaCountry,
-  defaultProxyOrder,
-  DefaultFilter,
-};
