@@ -72,6 +72,7 @@ export default {
   used_many: 'Use up to 3 people',
   used_once: 'Issued once',
   telegramOnly: 'Telegram Only',
+  typeOfProxy: 'HTTPs/SOCKS5 Proxy type',
 
   create_order: 'Create order',
 

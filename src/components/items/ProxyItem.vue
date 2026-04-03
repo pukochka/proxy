@@ -1,7 +1,9 @@
 <template>
   <q-item
-    class="rounded q-list--bordered bg-blur proxy-item-card"
+    clickable
+    class="rounded q-card--bordered bg-blur proxy-item-card"
     :class="glowModifierClass"
+    @click="select"
   >
     <q-item-section class="q-gutter-y-sm proxy-item-card__content">
       <q-item-label class="text-center text-h5 text-weight-bold">
@@ -45,16 +47,12 @@
     </q-item-section>
 
     <q-item-section side class="proxy-item-card__content">
-      <q-btn
-        no-caps
-        unelevated
-        color="secondary"
-        class="rounded fit"
-        :label="t('buy')"
-        :loading="loading"
-        @click="select"
-      />
+      <q-icon name="chevron_right" size="32px" />
     </q-item-section>
+
+    <q-inner-loading :showing="loading" class="z-marginals">
+      <q-spinner-ball size="64px" color="primary" />
+    </q-inner-loading>
   </q-item>
 </template>
 
@@ -97,7 +95,7 @@ const select = () => {
       'getCount',
       {
         version: data.selected.version,
-        country: 'ru',
+        country: 'ca',
         user_secret_key: data.systemUserValue.secret_user_key,
         public_key: config.public_key,
       },

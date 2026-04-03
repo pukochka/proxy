@@ -35,10 +35,10 @@ function attachLoadingInterceptors(client: typeof proxyClient) {
       }
       useDialog(
         'Произошла ошибка сервера, обратитеcь в поддержку сервиса',
-        true,
+        true
       );
       return Promise.reject(error);
-    },
+    }
   );
 }
 
@@ -47,12 +47,12 @@ attachLoadingInterceptors(bottClient);
 
 export const proxyApi = {
   async get<T = unknown>(
-    requestConfig: AxiosRequestConfig,
+    requestConfig: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
     return proxyClient.request<T>({ ...requestConfig, method: 'get' });
   },
   async post<T = unknown>(
-    requestConfig: AxiosRequestConfig,
+    requestConfig: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
     return proxyClient.request<T>({ ...requestConfig, method: 'post' });
   },
@@ -60,7 +60,7 @@ export const proxyApi = {
 
 export const bottApi = {
   async post<T = unknown>(
-    requestConfig: AxiosRequestConfig,
+    requestConfig: AxiosRequestConfig
   ): Promise<AxiosResponse<T>> {
     return bottClient.request<T>({ ...requestConfig, method: 'post' });
   },

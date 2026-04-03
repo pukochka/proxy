@@ -58,7 +58,6 @@
       unelevated
       no-caps
       class="absolute-left"
-      size="md"
       color="secondary"
       padding="4px 8px"
       icon="navigate_before"
@@ -78,7 +77,6 @@
       unelevated
       no-caps
       class="absolute-right"
-      size="md"
       color="secondary"
       padding="4px 8px"
       icon-right="navigate_next"
@@ -142,12 +140,8 @@ const height = computed(() =>
     : props.visibleItems * props.elHeight + 2 + 'px'
 );
 
-const labelNext = computed(() =>
-  quasar.screen.width < 350 ? '' : t('next')
-);
-const labelPrev = computed(() =>
-  quasar.screen.width < 350 ? '' : t('prev')
-);
+const labelNext = computed(() => (quasar.screen.width < 350 ? '' : t('next')));
+const labelPrev = computed(() => (quasar.screen.width < 350 ? '' : t('prev')));
 
 const pageCount = computed(() =>
   Math.ceil(props.currentItems.length / props.visibleItems)
@@ -224,5 +218,3 @@ interface Props {
   searching?: boolean;
 }
 </script>
-
-

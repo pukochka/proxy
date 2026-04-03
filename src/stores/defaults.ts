@@ -43,11 +43,11 @@ export const defaultSystemUser: SystemUser = {
 };
 
 export const russiaCountry: ProxyCountry = {
-  org_id: 'ru',
-  name_ru: 'Россия',
-  name_en: 'Russia',
+  org_id: 'ca',
+  name_ru: 'Канада',
+  name_en: 'Canada',
   image:
-    '//upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/22px-Flag_of_Russia.svg.png',
+    '//upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/22px-Flag_of_Canada.svg.png',
 };
 
 export const defaultProxyOrder: ProxyOrder = {

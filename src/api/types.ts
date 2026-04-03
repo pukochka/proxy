@@ -7,7 +7,7 @@ export interface ProxyApiResponse<T = unknown> {
 export class ProxyApiError extends Error {
   constructor(
     message: string,
-    public readonly payload?: ProxyApiResponse<unknown>,
+    public readonly payload?: ProxyApiResponse<unknown>
   ) {
     super(message);
     this.name = 'ProxyApiError';

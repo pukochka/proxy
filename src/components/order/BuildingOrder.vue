@@ -14,43 +14,24 @@
 
         <q-btn
           flat
-          class="rounded"
-          size="md"
-          color="secondary"
-          icon="close"
           v-close-popup
+          icon="close"
+          class="rounded"
+          color="secondary"
         />
       </q-toolbar>
 
-      <q-card-section class="q-py-none q-gutter-y-sm">
+      <q-card-section class="q-py-none q-gutter-y-md">
         <setting-item
-          v-for="(item, index) in setting"
           :key="index"
           :item="item"
+          v-for="(item, index) in setting"
         ></setting-item>
       </q-card-section>
 
-      <q-card-section class="q-py-sm">
-        <div class="text-size-16 q-py-sm">{{ t('type') }}</div>
-
-        <div class="row">
-          <q-item tag="label" dense class="col rounded">
-            <q-radio
-              v-model="type"
-              color="secondary"
-              val="http"
-              label="HTTPs"
-            />
-          </q-item>
-
-          <q-item tag="label" dense class="col rounded">
-            <q-radio
-              v-model="type"
-              color="secondary"
-              val="socks"
-              label="SOCKS5"
-            />
-          </q-item>
+      <q-card-section class="q-py-sm" v-if="data.selected.version !== 5">
+        <div class="text-size-16 text-center text-weight-bold">
+          {{ t('typeOfProxy') }}
         </div>
       </q-card-section>
 
@@ -75,14 +56,13 @@
 
         <div class="row q-px-md q-pb-md">
           <q-btn
-            unelevated
             no-caps
+            unelevated
+            color="secondary"
             class="col rounded"
-            size="md"
-            :disable="states.loadings.getPrice || data.range.max <= 0"
             :label="t('create_order')"
             :loading="loading"
-            color="secondary"
+            :disable="states.loadings.getPrice || data.range.max <= 0"
             @click="createOrder"
           />
         </div>
@@ -163,5 +143,3 @@ const setting = computed(() => [
   },
 ]);
 </script>
-
-

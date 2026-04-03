@@ -1,15 +1,10 @@
 <template>
   <div class="q-gutter-y-md col" v-if="states.loadings.init === false">
-    <div class="text-center text-size-30 text-weight-bold">Proxy</div>
-
-    <div class="text-center" v-if="data.proxies.length === 0"></div>
-
     <proxy-item
-      v-else
-      v-for="(item, index) of data.proxies"
       :key="item"
       :item="item"
       :gradient-variant="index % 4"
+      v-for="(item, index) of data.proxies"
     />
   </div>
 </template>

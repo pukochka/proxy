@@ -1,7 +1,7 @@
 <template>
   <q-item clickable @click="emit('select', item)" v-close-popup>
     <q-item-section avatar>
-      <q-avatar size="md" text-color="white">
+      <q-avatar text-color="white">
         <q-img :src="item.image" spinner-color="primary" spinner-size="82px" />
       </q-avatar>
     </q-item-section>

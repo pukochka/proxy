@@ -6,7 +6,7 @@
   >
     <div class="row no-wrap col-grow">
       <q-item-section class="items-center" avatar>
-        <q-avatar size="md" square class="rounded">
+        <q-avatar square class="rounded">
           <q-img :src="item.country.image" spinner-color="primary" />
         </q-avatar>
 
@@ -119,5 +119,3 @@ interface OrderItemProps {
   item: ProxyOrder;
 }
 </script>
-
-

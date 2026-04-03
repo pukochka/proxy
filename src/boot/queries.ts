@@ -11,16 +11,14 @@ import { assertNever } from 'src/utils/assertNever';
 async function runFetchProxy(
   query: ProxyQueries,
   params: ProxyParams<ProxyQueries> | undefined,
-  open?: boolean,
+  open?: boolean
 ) {
   const data = useDataStore();
   const states = useStatesStore();
   try {
     switch (query) {
       case 'getProxy': {
-        const list = await ProxyService.getProxy(
-          params as ProxyGetProxyParams,
-        );
+        const list = await ProxyService.getProxy(params as ProxyGetProxyParams);
         data.setProxy(list);
         states.loadings.init = false;
         break;
@@ -40,7 +38,7 @@ async function runFetchProxy(
 
       case 'getOrders': {
         const orders = await ProxyService.getOrders(
-          params as ProxyGetOrdersParams,
+          params as ProxyGetOrdersParams
         );
         data.ordersValue = orders ?? [];
         break;
@@ -48,7 +46,7 @@ async function runFetchProxy(
 
       case 'buyProxy': {
         const created = await ProxyService.buyProxy(
-          params as ProxyBuyProxyParams,
+          params as ProxyBuyProxyParams
         );
         states.closeDialog('build');
         await fetchProxy('getOrders', {
@@ -76,7 +74,7 @@ async function runFetchProxy(
 
       case 'prolongProxy': {
         const order = await ProxyService.prolongProxy(
-          params as ProxyProlongProxyParams,
+          params as ProxyProlongProxyParams
         );
         if (order) {
           data.selectedOrder = order;
@@ -86,7 +84,7 @@ async function runFetchProxy(
 
       case 'getCount': {
         const count = await ProxyService.getCount(
-          params as ProxyGetCountParams,
+          params as ProxyGetCountParams
         );
         data.range.max = count ?? 0;
         if (open) {
@@ -97,7 +95,7 @@ async function runFetchProxy(
 
       case 'getPrice': {
         const quote = await ProxyService.getPrice(
-          params as ProxyGetPriceParams,
+          params as ProxyGetPriceParams
         );
         data.payment = quote ?? {
           period: 30,
@@ -135,7 +133,7 @@ async function runFetchProxy(
 
       case 'setLanguage': {
         const user = await ProxyService.setLanguage(
-          params as ProxySetLangParams,
+          params as ProxySetLangParams
         );
         data.setUser(user);
         break;
@@ -156,7 +154,7 @@ async function runFetchProxy(
         const p = params as ProxyCheckWorkParams;
         await ProxyService.deleteProxy(p);
         data.ordersValue = data.ordersValue.filter(
-          (item) => item.order_org_id !== p.order_org_id,
+          (item) => item.order_org_id !== p.order_org_id
         );
         break;
       }
@@ -189,12 +187,12 @@ async function runFetchProxy(
 export async function fetchProxy<Q extends ProxyQueries>(
   query: Q,
   params?: ProxyParams<Q>,
-  open?: boolean,
+  open?: boolean
 ) {
   return runFetchProxy(
     query,
     params as ProxyParams<ProxyQueries> | undefined,
-    open,
+    open
   );
 }
 

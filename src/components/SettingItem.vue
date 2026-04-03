@@ -1,6 +1,6 @@
 <template>
   <div class="row no-wrap items-end text-size-16">
-    <div class="">{{ item.label }}</div>
+    <div class="text-weight-bold">{{ item.label }}</div>
 
     <div class="col-grow q-mx-sm relative-position">
       <div class="dashed-line"></div>
@@ -15,15 +15,15 @@
       />
     </div>
 
-    <div class="">{{ item.value }}</div>
+    <div class="text-weight-bold">{{ item.value }}</div>
   </div>
 
   <div class="row">
     <q-btn
       dense
       no-caps
-      unelevated
-      class="rounded q-ml-sm col"
+      outline
+      class="rounded col"
       color="secondary"
       :label="t('change')"
       @click="open"
@@ -54,5 +54,3 @@ interface SettingItemProps {
   item: SettingItemInstance;
 }
 </script>
-
-

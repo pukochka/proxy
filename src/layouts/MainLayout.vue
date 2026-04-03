@@ -2,9 +2,9 @@
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-transparent z-header">
       <q-tabs
-        inline-label
+        dense
         align="justify"
-        class="bg-transparent"
+        class="bg-transparent q-card--bordered q-ma-sm rounded bg-blur"
         :class="[config.dark ? ' text-secondary' : ' text-primary']"
         v-model="states.tab"
       >

@@ -5,15 +5,15 @@ import { ProxyApiError } from 'src/api/types';
 
 export function unwrapProxy<T>(
   res: AxiosResponse<ProxyApiResponse<T>>,
-  options: { allowUndefinedData: true },
+  options: { allowUndefinedData: true }
 ): T | undefined;
 export function unwrapProxy<T>(
   res: AxiosResponse<ProxyApiResponse<T>>,
-  options?: { allowUndefinedData?: false },
+  options?: { allowUndefinedData?: false }
 ): T;
 export function unwrapProxy<T>(
   res: AxiosResponse<ProxyApiResponse<T>>,
-  options?: { allowUndefinedData?: boolean },
+  options?: { allowUndefinedData?: boolean }
 ): T | undefined {
   const body = res.data;
   if (!body || body.result !== true) {

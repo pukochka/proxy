@@ -45,7 +45,7 @@
         <q-list style="min-width: 100px">
           <q-item clickable v-close-popup @click="changeLanguage('ru')">
             <q-item-section avatar>
-              <q-avatar size="md" rounded>
+              <q-avatar rounded>
                 <q-img
                   spinner-size="82px"
                   spinner-color="primary"
@@ -63,7 +63,7 @@
 
           <q-item clickable v-close-popup @click="changeLanguage('eng')">
             <q-item-section avatar>
-              <q-avatar size="md" rounded>
+              <q-avatar rounded>
                 <q-img
                   spinner-color="primary"
                   spinner-size="82px"

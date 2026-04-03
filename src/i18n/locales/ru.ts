@@ -72,6 +72,7 @@ export default {
   used_many: 'Используют до 3-х человек',
   used_once: 'Выдаются в одни руки',
   telegramOnly: 'Только Telegram',
+  typeOfProxy: 'Тип прокси HTTPs/SOCKS5',
 
   create_order: 'Создать заказ',
 

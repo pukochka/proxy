@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-center" style="height: calc(100vh - 48px)">
+  <div class="flex flex-center" style="height: calc(100vh - 70px)">
     <q-tab-panels
       animated
       swipeable

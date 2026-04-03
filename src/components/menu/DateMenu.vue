@@ -76,5 +76,3 @@ const update = () => {
     : (selected.value = data.selectedDate.toString());
 };
 </script>
-
-

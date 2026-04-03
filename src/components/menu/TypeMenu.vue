@@ -75,5 +75,3 @@ const types = [
   },
 ];
 </script>
-
-

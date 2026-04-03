@@ -21,7 +21,6 @@
         <q-btn
           flat
           class="rounded"
-          size="md"
           color="secondary"
           icon="close"
           v-close-popup
@@ -77,7 +76,6 @@
           no-caps
           class="rounded col-12"
           unelevated
-          size="md"
           color="secondary"
           :loading="loading.check"
           :label="t('check')"
@@ -89,7 +87,6 @@
           no-caps
           class="rounded col-12"
           unelevated
-          size="md"
           color="primary"
           :loading="loading.prolong"
           :label="t('prolong_proxy')"
@@ -256,5 +253,3 @@ interface InfoProps {
   change?: boolean;
 }
 </script>
-
-

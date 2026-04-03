@@ -9,7 +9,6 @@
         <q-btn
           flat
           class="rounded"
-          size="md"
           color="secondary"
           icon="close"
           v-close-popup
@@ -69,5 +68,3 @@ const update = () => {
   filterIp.value = '';
 };
 </script>
-
-

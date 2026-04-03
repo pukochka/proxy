@@ -65,7 +65,6 @@
           no-caps
           unelevated
           class="col rounded"
-          size="md"
           color="secondary"
           :label="t('apply')"
           @click="select"
@@ -77,7 +76,6 @@
           no-caps
           unelevated
           class="col rounded"
-          size="md"
           color="secondary"
           :label="t('close')"
           v-close-popup
@@ -139,5 +137,3 @@ const update = () => {
   });
 };
 </script>
-
-

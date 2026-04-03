@@ -11,7 +11,7 @@ export class BottCheckHashService {
       data: {
         bot_id: config.bot_id,
         userData: getHash(),
-        },
+      },
     });
     return unwrapProxy(res);
   }

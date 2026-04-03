@@ -66,5 +66,3 @@ const update = () => {
   model.value = null;
 };
 </script>
-
-

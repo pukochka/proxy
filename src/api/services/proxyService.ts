@@ -10,10 +10,7 @@ export interface ProxyPaymentQuote {
 }
 
 export class ProxyService {
-  private static async getQuery<T>(
-    url: string,
-    params: object,
-  ) {
+  private static async getQuery<T>(url: string, params: object) {
     return proxyApi.get<ProxyApiResponse<T>>({ url, params });
   }
 
@@ -28,7 +25,7 @@ export class ProxyService {
   }
 
   static async getOrders(
-    params: ProxyGetOrdersParams,
+    params: ProxyGetOrdersParams
   ): Promise<ProxyOrder[] | undefined> {
     const res = await this.getQuery<ProxyOrder[]>('getOrders', params);
     return unwrapProxy(res, { allowUndefinedData: true });
@@ -40,35 +37,35 @@ export class ProxyService {
   }
 
   static async getCountry(
-    params: ProxyGetCountryParams,
+    params: ProxyGetCountryParams
   ): Promise<ProxyCountry[] | undefined> {
     const res = await this.getQuery<ProxyCountry[]>('getCountry', params);
     return unwrapProxy(res, { allowUndefinedData: true });
   }
 
   static async getCount(
-    params: ProxyGetCountParams,
+    params: ProxyGetCountParams
   ): Promise<number | undefined> {
     const res = await this.getQuery<number>('getCount', params);
     return unwrapProxy(res, { allowUndefinedData: true });
   }
 
   static async getPrice(
-    params: ProxyGetPriceParams,
+    params: ProxyGetPriceParams
   ): Promise<ProxyPaymentQuote | undefined> {
     const res = await this.getQuery<ProxyPaymentQuote>('getPrice', params);
     return unwrapProxy(res, { allowUndefinedData: true });
   }
 
   static async buyProxy(
-    params: ProxyBuyProxyParams,
+    params: ProxyBuyProxyParams
   ): Promise<ProxyOrder[] | undefined> {
     const res = await this.getQuery<ProxyOrder[]>('buyProxy', params);
     return unwrapProxy(res, { allowUndefinedData: true });
   }
 
   static async prolongProxy(
-    params: ProxyProlongProxyParams,
+    params: ProxyProlongProxyParams
   ): Promise<ProxyOrder | undefined> {
     const res = await this.getQuery<ProxyOrder>('prolongProxy', params);
     return unwrapProxy(res, { allowUndefinedData: true });

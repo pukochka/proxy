@@ -40,5 +40,3 @@ interface Props {
   text: string;
 }
 </script>
-
-

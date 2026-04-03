@@ -67,7 +67,7 @@
 
 <script lang="ts" setup>
 import config from 'src/config';
-import { ref ,computed} from 'vue';
+import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { useStatesStore } from 'stores/states/statesStore';
@@ -115,5 +115,3 @@ const prolong = () => {
   });
 };
 </script>
-
-
