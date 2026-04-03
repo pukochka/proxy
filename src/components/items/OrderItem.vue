@@ -6,8 +6,14 @@
   >
     <div class="row no-wrap col-grow">
       <q-item-section class="items-center" avatar>
-        <q-avatar square class="rounded">
-          <q-img :src="item.country.image" spinner-color="primary" />
+        <q-avatar square class="rounded" size="36px">
+          <country-flag
+            :code="item.country.org_id"
+            :fallback-src="item.country.image"
+            :width="36"
+            :height="36"
+            squared
+          />
         </q-avatar>
 
         <q-badge
@@ -63,6 +69,7 @@ import { useI18n } from 'vue-i18n';
 import { defaultProxyOrder } from 'stores/defaults';
 import { date } from 'quasar';
 
+import CountryFlag from 'components/CountryFlag.vue';
 import { useStatesStore } from 'stores/states/statesStore';
 import { useDataStore } from 'stores/data/dataStore';
 

@@ -8,21 +8,21 @@
     <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
         <q-toolbar-title class="row text-weight-bold items-center">
-          <div class="">{{ version }}</div>
+          <div>{{ version }}</div>
 
           <q-badge
-            class="q-pa-sm text-weight-bold q-ml-sm rounded"
+            :label="status.text"
             :color="status.color"
             text-color="white"
-            :label="status.text"
+            class="q-pa-sm text-weight-bold q-ml-sm rounded"
           />
         </q-toolbar-title>
 
         <q-btn
           flat
+          icon="close"
           class="rounded"
           color="secondary"
-          icon="close"
           v-close-popup
         />
       </q-toolbar>
@@ -30,8 +30,8 @@
       <q-card-section class="q-pt-none q-gutter-y-sm">
         <div
           class="row no-wrap items-end"
-          v-for="(item, index) in info"
           :key="index"
+          v-for="(item, index) in info"
         >
           <div class="">{{ item.label }}</div>
 
@@ -39,8 +39,16 @@
             <div class="dashed-line"></div>
           </div>
 
-          <div class="q-mr-sm" v-if="item.image">
+          <div class="q-mr-sm" v-if="item.countryCode || item.image">
+            <country-flag
+              v-if="item.countryCode"
+              :code="item.countryCode"
+              :fallback-src="item.image"
+              :width="24"
+              :height="18"
+            />
             <q-img
+              v-else-if="item.image"
               class="rounded"
               :src="item.image"
               spinner-color="secondary"
@@ -49,18 +57,6 @@
           </div>
 
           <div class="ellipsis">{{ item.value }}</div>
-
-          <q-btn
-            v-if="item.change"
-            no-caps
-            unelevated
-            class="rounded q-ml-sm"
-            padding="4px"
-            color="secondary"
-            :loading="states.loadings.updateType"
-            :label="t('change')"
-            @click="states.openDialog('type_menu')"
-          />
 
           <copy-button
             class="q-ml-sm"
@@ -109,6 +105,7 @@ import { useDataStore } from 'stores/data/dataStore';
 import { fetchProxy } from 'boot/queries';
 
 import CopyButton from 'components/CopyButton.vue';
+import CountryFlag from 'components/CountryFlag.vue';
 
 const { t } = useI18n();
 const states = useStatesStore();
@@ -143,11 +140,7 @@ const version = computed(() =>
     ? 'IPv4'
     : data.selectedOrder.proxy === '6'
     ? 'IPv6'
-    : ''
-);
-
-const type = computed(() =>
-  data.selectedOrder.type === 'http' ? 'HTTPs' : 'SOCKS5'
+    : 'MTProto'
 );
 
 const country = computed(
@@ -221,13 +214,9 @@ const info = computed((): InfoProps[] => [
     copy: true,
   },
   {
-    label: t('type'),
-    value: type.value,
-    change: true,
-  },
-  {
     label: t('country'),
     value: country.value,
+    countryCode: data.selectedOrder.country.org_id,
     image: data.selectedOrder.country.image,
   },
   {
@@ -250,6 +239,7 @@ interface InfoProps {
   value: any;
   copy?: boolean;
   image?: string;
+  countryCode?: string;
   change?: boolean;
 }
 </script>

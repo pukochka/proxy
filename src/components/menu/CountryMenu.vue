@@ -6,8 +6,16 @@
   >
     <q-card style="width: 100%" class="rounded" flat bordered>
       <q-toolbar class="q-px-md">
-        <q-toolbar-title class="text-weight-bold">
-          {{ data.selected.title }}
+        <q-toolbar-title class="text-weight-bold row items-center no-wrap">
+          <country-flag
+            class="q-mr-sm"
+            style="flex-shrink: 0"
+            :code="data.selectedCountry.org_id"
+            :fallback-src="data.selectedCountry.image"
+            :width="22"
+            :height="16"
+          />
+          <span class="ellipsis">{{ data.selected.title }}</span>
         </q-toolbar-title>
 
         <q-btn
@@ -50,6 +58,7 @@ import { useI18n } from 'vue-i18n';
 import { useStatesStore } from 'stores/states/statesStore';
 import { useDataStore } from 'stores/data/dataStore';
 
+import CountryFlag from 'components/CountryFlag.vue';
 import ChooseItem from 'components/menu/ChooseItem.vue';
 import { fetchProxy } from 'boot/queries';
 import config from 'src/config';

@@ -1,10 +1,10 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-transparent z-header">
+    <q-header class="bg-transparent z-header bg-blur q-ma-sm">
       <q-tabs
         dense
         align="justify"
-        class="bg-transparent q-card--bordered q-ma-sm rounded bg-blur"
+        class="bg-transparent rounded bordered"
         :class="[config.dark ? ' text-secondary' : ' text-primary']"
         v-model="states.tab"
       >

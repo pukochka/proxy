@@ -1,4 +1,8 @@
 @import '../assets/fonts/fonts.css';
+@import 'flag-icons/css/flag-icons.min.css';
+
+$black-opacity: rgba(0, 0, 0, 0.12);
+$white-opacity: rgba(255, 255, 255, 0.28);
 
 body {
   -ms-scroll-chaining: none;
@@ -33,6 +37,16 @@ body {
 .bg-blur {
   backdrop-filter: blur(2px); /* Размытие фона */
   -webkit-backdrop-filter: blur(2px); /* Для Safari */
+}
+
+.bordered {
+  border: 1px solid $black-opacity !important;
+}
+
+body.body--dark {
+  .bordered {
+    border: 1px solid $white-opacity !important;
+  }
 }
 
 .q-menu {

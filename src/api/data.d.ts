@@ -137,4 +137,6 @@ declare interface SettingItemInstance {
   value: string;
   menu: 'count_menu' | 'country_menu' | 'date_menu' | '';
   icon?: string;
+  /** ISO 3166-1 alpha-2 (как в org_id бэкенда) для flag-icons */
+  countryCode?: string;
 }

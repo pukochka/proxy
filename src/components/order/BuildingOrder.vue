@@ -29,7 +29,7 @@
         ></setting-item>
       </q-card-section>
 
-      <q-card-section class="q-py-sm" v-if="data.selected.version !== 5">
+      <q-card-section class="q-py-sm" v-if="data.selected.version !== '5'">
         <div class="text-size-16 text-center text-weight-bold">
           {{ t('typeOfProxy') }}
         </div>
@@ -129,6 +129,7 @@ const setting = computed(() => [
         ? data.selectedCountry.name_ru
         : data.selectedCountry.name_en,
     menu: 'country_menu',
+    countryCode: data.selectedCountry?.org_id,
     icon: data.selectedCountry?.image,
   },
   {

@@ -6,8 +6,16 @@
       <div class="dashed-line"></div>
     </div>
 
-    <div class="q-mr-sm" v-if="item.icon">
+    <div class="q-mr-sm" v-if="item.countryCode || item.icon">
+      <country-flag
+        v-if="item.countryCode"
+        :code="item.countryCode"
+        :fallback-src="item.icon"
+        :width="24"
+        :height="18"
+      />
       <q-img
+        v-else-if="item.icon"
         class="rounded"
         :src="item.icon"
         spinner-color="primary"
@@ -34,6 +42,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 
+import CountryFlag from 'components/CountryFlag.vue';
 import { defaultSettingsItem } from 'src/stores/defaults';
 import { useStatesStore } from 'stores/states/statesStore';
 
