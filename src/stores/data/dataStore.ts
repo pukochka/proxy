@@ -39,6 +39,7 @@ export const useDataStore = defineStore('data', {
       selectedCountry: defaultProxyCountry,
       selectedCount: 1,
       selectedDate: 30,
+      mtproto: 0,
 
       range: {
         max: 1,
@@ -59,7 +60,10 @@ export const useDataStore = defineStore('data', {
     user: (state): ProxyUser => state.userValue,
     systemUser: (state): SystemUser => state.systemUserValue,
 
-    proxies: (state): ProxyItem[] => state.proxiesValue,
+    proxies: (state): ProxyItem[] =>
+      state.proxiesValue.filter(
+        (item) => !!state.mtproto || item.version !== '5'
+      ),
     orders: (state): ProxyOrder[] =>
       state.ordersValue
         .reverse()

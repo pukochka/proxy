@@ -11,6 +11,7 @@ export interface DataModel {
   selectedCountry: ProxyCountry;
   selectedCount: number;
   selectedDate: number;
+  mtproto: number;
 
   range: {
     min: number;

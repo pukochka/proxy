@@ -31,8 +31,13 @@ export class ProxyService {
     return unwrapProxy(res, { allowUndefinedData: true });
   }
 
-  static async getSettings(params: PublicKey): Promise<string> {
-    const res = await this.getQuery<string>('getSettings', params);
+  static async getSettings(
+    params: PublicKey
+  ): Promise<{ color: number; mtproto: number }> {
+    const res = await this.getQuery<{ color: number; mtproto: number }>(
+      'getSettings',
+      params
+    );
     return unwrapProxy(res);
   }
 

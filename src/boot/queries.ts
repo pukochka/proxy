@@ -140,13 +140,17 @@ async function runFetchProxy(
       }
 
       case 'getSettings': {
-        const settingId = await ProxyService.getSettings(params as PublicKey);
-        const color =
-          colors.find((item) => item.id === Number(settingId)) ?? colors[0];
-        setCssVar('primary', color.primary);
-        setCssVar('secondary', color.secondary);
-        LocalStorage.set('_bott-primary', color.primary);
-        LocalStorage.set('_bott-secondary', color.secondary);
+        const { color, mtproto } = await ProxyService.getSettings(
+          params as PublicKey
+        );
+        data.mtproto = mtproto;
+
+        const pallet =
+          colors.find((item) => item.id === Number(color)) ?? colors[0];
+        setCssVar('primary', pallet.primary);
+        setCssVar('secondary', pallet.secondary);
+        LocalStorage.set('_bott-primary', pallet.primary);
+        LocalStorage.set('_bott-secondary', pallet.secondary);
         break;
       }
 
