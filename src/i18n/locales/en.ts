@@ -73,6 +73,7 @@ export default {
   used_once: 'Issued once',
   telegramOnly: 'Telegram Only',
   typeOfProxy: 'HTTPs/SOCKS5 Proxy type',
+  secretKey: 'Secret key',
 
   create_order: 'Create order',
 

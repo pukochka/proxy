@@ -73,6 +73,7 @@ export default {
   used_once: 'Выдаются в одни руки',
   telegramOnly: 'Только Telegram',
   typeOfProxy: 'Тип прокси HTTPs/SOCKS5',
+  secretKey: 'Секретный ключ',
 
   create_order: 'Создать заказ',
 

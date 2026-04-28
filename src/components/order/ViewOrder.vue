@@ -28,46 +28,45 @@
       </q-toolbar>
 
       <q-card-section class="q-pt-none q-gutter-y-sm">
-        <div
-          class="row no-wrap items-end"
-          :key="index"
-          v-for="(item, index) in info"
-        >
-          <div class="">{{ item.label }}</div>
+        <template :key="index" v-for="(item, index) in info">
+          <div class="row no-wrap items-end" v-if="item.unVisible !== true">
+            <div class="">{{ item.label }}</div>
 
-          <div class="col-grow q-mx-sm relative-position">
-            <div class="dashed-line"></div>
+            <div class="col-grow q-mx-sm relative-position">
+              <div class="dashed-line"></div>
+            </div>
+
+            <div class="q-mr-sm" v-if="item.countryCode || item.image">
+              <country-flag
+                v-if="item.countryCode"
+                :code="item.countryCode"
+                :fallback-src="item.image"
+                :width="24"
+                :height="18"
+              />
+              <q-img
+                v-else-if="item.image"
+                class="rounded"
+                :src="item.image"
+                spinner-color="secondary"
+                style="height: 24px; width: 24px"
+              />
+            </div>
+
+            <div class="ellipsis">{{ item.value }}</div>
+
+            <copy-button
+              class="q-ml-sm"
+              v-if="item.copy"
+              :text="item.value"
+            ></copy-button>
           </div>
-
-          <div class="q-mr-sm" v-if="item.countryCode || item.image">
-            <country-flag
-              v-if="item.countryCode"
-              :code="item.countryCode"
-              :fallback-src="item.image"
-              :width="24"
-              :height="18"
-            />
-            <q-img
-              v-else-if="item.image"
-              class="rounded"
-              :src="item.image"
-              spinner-color="secondary"
-              style="height: 24px; width: 24px"
-            />
-          </div>
-
-          <div class="ellipsis">{{ item.value }}</div>
-
-          <copy-button
-            class="q-ml-sm"
-            v-if="item.copy"
-            :text="item.value"
-          ></copy-button>
-        </div>
+        </template>
       </q-card-section>
 
       <div class="row q-gutter-y-sm q-px-md q-pb-md">
         <q-btn
+          v-if="data.selectedOrder.proxy !== '5'"
           dense
           no-caps
           class="rounded col-12"
@@ -202,9 +201,10 @@ const info = computed((): InfoProps[] => [
     label: t('login'),
     value: data.selectedOrder.user,
     copy: true,
+    unVisible: data.selectedOrder.proxy === '5',
   },
   {
-    label: t('password'),
+    label: data.selectedOrder.proxy === '5' ? t('secretKey') : t('password'),
     value: data.selectedOrder.pass,
     copy: true,
   },
@@ -241,5 +241,6 @@ interface InfoProps {
   image?: string;
   countryCode?: string;
   change?: boolean;
+  unVisible?: boolean;
 }
 </script>
