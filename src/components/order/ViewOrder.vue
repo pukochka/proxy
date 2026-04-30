@@ -75,7 +75,7 @@
           color="secondary"
           class="rounded col-12"
           :label="t('activateProxy')"
-          :href="`tg://proxy?server=${data.selectedOrder.ip}&port=${data.selectedOrder.port}&secret=${data.selectedOrder.pass}`"
+          :href="activateProxyHref"
         />
 
         <q-btn
@@ -169,6 +169,15 @@ const createAt = computed(() =>
 const endAt = computed(() =>
   date.formatDate(data.selectedOrder.end_time * 1000, 'DD-MM-YYYY HH:mm')
 );
+
+const activateProxyHref = computed(() => {
+  const server = encodeURIComponent(data.selectedOrder.ip || '');
+  const port = encodeURIComponent(String(data.selectedOrder.port || ''));
+  const secret = encodeURIComponent(data.selectedOrder.pass || '');
+
+  // Universal Telegram proxy link, works better in WebApp/Desktop than tg:// deep links.
+  return `https://t.me/proxy?server=${server}&port=${port}&secret=${secret}`;
+});
 
 const prolongProxy = () => {
   loading.value.prolong = true;
