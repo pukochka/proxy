@@ -92,7 +92,6 @@ export const useDataStore = defineStore('data', {
     /*  */
     dateRange: (state) => {
       const scheme = i18n.global.tm('dateRange') as Record<string, string>;
-      console.log(scheme);
       return Object.entries(scheme).filter((_, index) =>
         state.selected.title.includes('IPv4')
           ? index > 2

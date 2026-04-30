@@ -66,12 +66,25 @@
 
       <div class="row q-gutter-y-sm q-px-md q-pb-md">
         <q-btn
+          v-if="data.selectedOrder.proxy === '5'"
+          dense
+          no-caps
+          unelevated
+          icon="launch"
+          target="_blank"
+          color="secondary"
+          class="rounded col-12"
+          :label="t('activateProxy')"
+          :href="`tg://proxy?server=${data.selectedOrder.ip}&port=${data.selectedOrder.port}&secret=${data.selectedOrder.pass}`"
+        />
+
+        <q-btn
           v-if="data.selectedOrder.proxy !== '5'"
           dense
           no-caps
-          class="rounded col-12"
           unelevated
           color="secondary"
+          class="rounded col-12"
           :loading="loading.check"
           :label="t('check')"
           @click="checkProxy"

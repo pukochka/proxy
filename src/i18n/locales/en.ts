@@ -74,6 +74,7 @@ export default {
   telegramOnly: 'Telegram Only',
   typeOfProxy: 'HTTPs/SOCKS5 Proxy type',
   secretKey: 'Secret key',
+  activateProxy: 'Go to proxy activation',
 
   create_order: 'Create order',
 

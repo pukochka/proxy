@@ -74,6 +74,7 @@ export default {
   telegramOnly: 'Только Telegram',
   typeOfProxy: 'Тип прокси HTTPs/SOCKS5',
   secretKey: 'Секретный ключ',
+  activateProxy: 'Перейти к активации прокси',
 
   create_order: 'Создать заказ',
 

@@ -17,7 +17,7 @@
         </q-avatar>
 
         <q-badge
-          class="full-width text-center"
+          class="full-width text-center q-mt-sm"
           color="orange"
           text-color="black"
           :label="version"
@@ -64,10 +64,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineProps } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { defaultProxyOrder } from 'stores/defaults';
 import { date } from 'quasar';
+import { useI18n } from 'vue-i18n';
+import { computed, defineProps } from 'vue';
+import { defaultProxyOrder } from 'stores/defaults';
 
 import CountryFlag from 'components/CountryFlag.vue';
 import { useStatesStore } from 'stores/states/statesStore';
@@ -88,7 +88,7 @@ const version = computed(() =>
     ? 'IPv4'
     : props.item.proxy === '6'
     ? 'IPv6'
-    : ''
+    : 'MTproto'
 );
 
 const createAt = computed(() =>
