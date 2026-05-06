@@ -13,14 +13,15 @@ export default {
 
   country: 'Страна',
   type: 'Тип',
-  result: 'Итог',
+  result: 'Итого к оплате',
   price_single: 'Цена за один день',
   quantity: 'Количество',
   select: 'Выбрать',
   period: 'Период',
   change: 'Изменить',
+  port: 'Порт',
 
-  copied: 'Скопированно!',
+  copied: 'Скопировано!',
   login: 'Логин',
   password: 'Пароль',
   date: 'Дата',
@@ -45,6 +46,12 @@ export default {
   search_not_found: 'Ничего не нашлось...',
   search: 'Поиск...',
 
+  ipv4shared: 'Для всех сайтов · до 3 человек',
+  ipv4: 'Для всех сайтов · персональный',
+  ipv6: 'Для IPv6 сайтов · персональный',
+  mtproto: 'Только Telegram · персональный',
+  popular: 'ПОПУЛЯРНЫЙ',
+
   search_ip: 'Найти по ip',
   search_date: 'Поиск по дате',
   search_active: 'Активные',
@@ -63,6 +70,7 @@ export default {
   order_active: 'Активен',
   order_ended: 'Окончен',
   order_delete: 'Удален',
+  order_remaining_expired: 'Истёк',
 
   selected_country: 'Выбранная страна',
   select_country: 'Выбор страны',
@@ -72,11 +80,11 @@ export default {
   used_many: 'Используют до 3-х человек',
   used_once: 'Выдаются в одни руки',
   telegramOnly: 'Только Telegram',
-  typeOfProxy: 'Тип прокси HTTPs/SOCKS5',
+  typeOfProxy: 'Тип подключения: HTTPs/SOCKS5',
   secretKey: 'Секретный ключ',
-  activateProxy: 'Перейти к активации прокси',
+  activateProxy: 'Установить прокси',
 
-  create_order: 'Создать заказ',
+  create_order: 'Оплатить',
 
   check_success: 'Proxy работает!',
   success_purchase: 'Успешно куплено {count} Proxy!',
@@ -88,6 +96,11 @@ export default {
   proxy_warning: 'Нет доступных Proxy',
   range_warning:
     'К сожалению с выбранными настройками доступных Proxy нет, попробуйте выбрать другую страну или другой Proxy',
+
+  all: 'Все',
+  active: 'Активные',
+  noActive: 'Законченные',
+  proxy: 'прокси',
 
   dateRange: {
     3: '3 дня',

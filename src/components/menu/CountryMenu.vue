@@ -21,7 +21,7 @@
         <q-btn
           flat
           class="rounded"
-          color="secondary"
+          color="primary"
           icon="close"
           v-close-popup
         />

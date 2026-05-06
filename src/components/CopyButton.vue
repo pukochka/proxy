@@ -1,9 +1,9 @@
 <template>
   <q-btn
-    unelevated
+    outline
+    size="11px"
     class="rounded"
-    padding="4px 8px"
-    color="secondary"
+    color="primary"
     :icon="state ? 'check' : 'content_copy'"
     @click="copy"
   />

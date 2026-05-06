@@ -19,6 +19,7 @@ export default {
   select: 'Select',
   period: 'Period',
   change: 'Change',
+  port: 'Port',
 
   copied: 'Copied!',
   login: 'Login',
@@ -50,7 +51,7 @@ export default {
   search_active: 'Active',
   search_end: 'Finished',
   find: 'To find',
-  clear: 'Сlear',
+  clear: 'Clear',
   findDate: 'Find the active Proxy in the range',
   selectRange: 'Select a range',
   multiply: 'By several parameters',
@@ -58,6 +59,7 @@ export default {
   order_active: 'Active',
   order_ended: 'Finished',
   order_delete: 'Deleted',
+  order_remaining_expired: 'Expired',
 
   filter: 'Filters',
   select_prolog: 'Select the renewal period',
@@ -67,14 +69,20 @@ export default {
   selected_country: 'Selected country',
   select_country: 'Select country',
 
+  ipv4shared: 'For all sites · up to 3 people',
+  ipv4: 'For all sites · personal',
+  ipv6: 'For IPv6 sites · personal',
+  mtproto: 'Telegram only · personal',
+  popular: 'POPULAR',
+
   support_ipv6: 'Suitable for IPv6-enabled sites',
   support_all: 'Suitable for all sites',
   used_many: 'Use up to 3 people',
   used_once: 'Issued once',
   telegramOnly: 'Telegram Only',
-  typeOfProxy: 'HTTPs/SOCKS5 Proxy type',
+  typeOfProxy: 'Connection type: HTTPs/SOCKS5',
   secretKey: 'Secret key',
-  activateProxy: 'Go to proxy activation',
+  activateProxy: 'Install a proxy',
 
   create_order: 'Create order',
 
@@ -88,6 +96,11 @@ export default {
   proxy_warning: 'No Proxy available',
   range_warning:
     'Unfortunately, there are no available Proxies with the selected settings, try choosing a different country or different Proxy',
+
+  all: 'All',
+  active: 'Active',
+  noActive: 'Finished',
+  proxy: 'proxy',
 
   dateRange: {
     3: '3 days',

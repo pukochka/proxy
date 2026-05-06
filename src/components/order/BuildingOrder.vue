@@ -1,27 +1,20 @@
 <template>
   <q-dialog
-    v-model="states.dialogs.build"
-    position="bottom"
     persistent
-    @before-show="update"
+    position="bottom"
     @hide="update"
+    @before-show="update"
+    v-model="states.dialogs.build"
   >
-    <q-card style="width: 100%" class="rounded" flat bordered>
-      <q-toolbar class="q-px-md">
-        <q-toolbar-title class="text-weight-bold">
+    <q-card class="rounded-top" flat bordered>
+      <modal-top no-bottom-space>
+        <div class="text-weight-bold">
           {{ data.selected.title }}
-        </q-toolbar-title>
+          <span class="text-primary">{{ t('proxy') }}</span>
+        </div>
+      </modal-top>
 
-        <q-btn
-          flat
-          v-close-popup
-          icon="close"
-          class="rounded"
-          color="secondary"
-        />
-      </q-toolbar>
-
-      <q-card-section class="q-py-none q-gutter-y-md">
+      <q-card-section class="q-pb-none q-gutter-y-xs">
         <setting-item
           :key="index"
           :item="item"
@@ -29,8 +22,8 @@
         ></setting-item>
       </q-card-section>
 
-      <q-card-section class="q-py-sm" v-if="data.selected.version !== '5'">
-        <div class="text-size-16 text-center text-weight-bold">
+      <q-card-section class="q-py-xs" v-if="data.selected.version !== '5'">
+        <div class="text-center bordered rounded q-pa-xs">
           {{ t('typeOfProxy') }}
         </div>
       </q-card-section>
@@ -58,10 +51,10 @@
           <q-btn
             no-caps
             unelevated
-            color="secondary"
-            class="col rounded"
-            :label="t('create_order')"
+            color="primary"
+            class="col q-py-sm rounded"
             :loading="loading"
+            :label="t('create_order')"
             :disable="states.loadings.getPrice || data.range.max <= 0"
             @click="createOrder"
           />
@@ -90,6 +83,7 @@ import { fetchProxy } from 'boot/queries';
 import { russiaCountry } from 'stores/defaults';
 
 import SettingItem from 'components/SettingItem.vue';
+import ModalTop from 'components/ModalTop.vue';
 
 const { t } = useI18n();
 const states = useStatesStore();

@@ -69,7 +69,25 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      /** `.tgs` как статические ассеты (как в vpn): `new URL('…/assets/Foo.tgs', import.meta.url).href`. */
+      extendViteConf(viteConf) {
+        const include = viteConf.assetsInclude;
+        const tgsPattern = '**/*.tgs';
+
+        if (Array.isArray(include)) {
+          if (!include.includes(tgsPattern)) {
+            include.push(tgsPattern);
+          }
+          return;
+        }
+
+        if (!include) {
+          viteConf.assetsInclude = [tgsPattern];
+          return;
+        }
+
+        viteConf.assetsInclude = [include, tgsPattern];
+      },
       // viteVuePluginOptions: {},
 
       // vitePlugins: [

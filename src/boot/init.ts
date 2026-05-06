@@ -8,11 +8,9 @@ export default boot(async () => {
   Dark.set(config.dark);
 
   const primary = <string>LocalStorage.getItem('_bott-primary');
-  const secondary = <string>LocalStorage.getItem('_bott-secondary');
 
-  if (primary && secondary) {
+  if (primary) {
     setCssVar('primary', primary);
-    setCssVar('secondary', secondary);
   }
 
   window.Telegram.WebApp.enableClosingConfirmation();

@@ -1,9 +1,12 @@
 <template>
-  <div class="flex flex-center" style="height: calc(100vh - 70px)">
+  <div
+    class="column items-center justify-center"
+    style="height: calc(100vh - 70px)"
+  >
     <q-tab-panels
       animated
       swipeable
-      class="fit bg-transparent"
+      class="fit full-width bg-transparent"
       v-model="states.tab"
     >
       <q-tab-panel name="payment" class="row flex-center">

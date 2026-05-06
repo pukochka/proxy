@@ -10,7 +10,7 @@ export function useDialog(message: string, error?: boolean) {
           label: 'OK',
           class: 'rounded',
           unelevated: true,
-          color: 'secondary',
+          color: 'primary',
         },
       }
     : {
@@ -25,7 +25,7 @@ export function useDialog(message: string, error?: boolean) {
           noCaps: true,
           label: i18n.global.t('cancel'),
           class: 'rounded',
-          color: 'secondary',
+          color: 'primary',
           unelevated: true,
         },
       };

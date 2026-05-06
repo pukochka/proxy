@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-y-md col relative-position">
-    <div class="text-center text-size-30 text-weight-bold">
+    <div class="text-h6">
       {{ t('orders') }}
     </div>
 
@@ -12,55 +12,35 @@
     </div>
 
     <div class="" v-else>
-      <div class="row justify-between q-py-sm">
-        <q-btn
-          dense
-          unelevated
-          no-caps
-          icon="tune"
-          class="rounded"
-          color="secondary"
-          :label="t('filter')"
-        >
-          <q-menu class="no-shadow q-list--bordered non-selectable">
-            <q-list dense separator style="max-width: 200px">
-              <q-item
-                clickable
-                v-close-popup="filter.close"
-                v-for="(filter, index) in filtersMenu"
-                :key="index"
-                @click="filter.action"
-              >
-                <q-item-section avatar>
-                  <q-icon :name="filter.icon" color="secondary" size="22px" />
-                </q-item-section>
-
-                <q-item-section>{{ filter.label }}</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
-
-        <q-btn
-          dense
-          unelevated
-          no-caps
-          v-if="filtered"
-          icon="close"
-          class="rounded"
-          color="secondary"
-          :label="t('clear')"
-          @click="data.nullifyFilter"
-        />
-      </div>
+      <q-tabs
+        dense
+        no-caps
+        align="justify"
+        active-color="primary"
+        class="rounded bordered q-mb-sm bg-blur"
+        v-model="tab"
+      >
+        <div class="row full-width">
+          <div class="col">
+            <q-tab name="all" content-class="col" :label="t('all')" />
+          </div>
+          <div class="col">
+            <q-tab name="active" content-class="col" :label="t('active')" />
+          </div>
+          <div class="col">
+            <q-tab name="noActive" content-class="col" :label="t('noActive')" />
+          </div>
+        </div>
+      </q-tabs>
 
       <choose-item
+        :key="tab"
+        stable-height
+        search=""
+        type="order"
         :elHeight="120"
         :visible-items="3"
-        search=""
-        stable-height
-        type="order"
-        :current-items="data.orders"
+        :current-items="ordersForTab"
       ></choose-item>
     </div>
 
@@ -71,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { useDataStore } from 'stores/data/dataStore';
@@ -86,24 +66,26 @@ const { t } = useI18n();
 const data = useDataStore();
 const states = useStatesStore();
 
+const tab = ref('all');
+
+/** Список из стора уже с учётом filterOrders; вкладки режут по status_org. */
+const ordersForTab = computed(() => {
+  const list = data.orders;
+  if (tab.value === 'active') {
+    return list.filter((o) => o.status_org === '1');
+  }
+  if (tab.value === 'noActive') {
+    return list.filter((o) => o.status_org !== '1');
+  }
+  return list;
+});
+
 const filtered = computed(
   () =>
     JSON.stringify(data.filterOrders) !== JSON.stringify(new DefaultFilter())
 );
 
 const filtersMenu = computed(() => [
-  {
-    label: t('search_ip'),
-    action: () => states.openDialog('ip_filter'),
-    icon: 'alternate_email',
-    close: true,
-  },
-  {
-    label: t('search_date'),
-    action: () => states.openDialog('date_filter'),
-    icon: 'calendar_month',
-    close: true,
-  },
   {
     label: t('search_active'),
     action: () => data.findOrders('active', true),
@@ -121,13 +103,6 @@ const filtersMenu = computed(() => [
     action: () => states.openDialog('type_filter'),
     icon: 'rss_feed',
     close: true,
-  },
-
-  {
-    label: t('multiply'),
-    action: () => (data.multiply = !data.multiply),
-    icon: data.multiply ? 'check_box' : 'check_box_outline_blank',
-    close: false,
   },
 ]);
 </script>

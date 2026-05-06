@@ -17,7 +17,7 @@
             v-model="count"
             :min="data.range.min"
             :max="data.range.max"
-            color="secondary"
+            color="primary"
             track-size="14px"
             thumb-color="primary"
           />
@@ -28,7 +28,7 @@
               flat
               size="lg"
               class="rounded"
-              color="secondary"
+              color="primary"
               icon="remove"
               @click="decrease"
             />
@@ -40,7 +40,7 @@
               flat
               size="lg"
               class="rounded"
-              color="secondary"
+              color="primary"
               icon="add"
               @click="increase"
             />
@@ -55,7 +55,7 @@
         </div>
 
         <q-inner-loading :showing="loading" class="z-max">
-          <q-spinner size="50px" color="secondary" />
+          <q-spinner size="50px" color="primary" />
         </q-inner-loading>
       </q-card-section>
 
@@ -65,7 +65,7 @@
           no-caps
           unelevated
           class="col rounded"
-          color="secondary"
+          color="primary"
           :label="t('apply')"
           @click="select"
           v-close-popup
@@ -76,7 +76,7 @@
           no-caps
           unelevated
           class="col rounded"
-          color="secondary"
+          color="primary"
           :label="t('close')"
           v-close-popup
         />

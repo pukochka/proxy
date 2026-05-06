@@ -14,7 +14,7 @@
               <q-radio
                 v-model="selected"
                 :val="item.value"
-                color="secondary"
+                color="primary"
                 @click="select(item.value)"
                 v-close-popup
               />

@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-y-md col">
-    <div class="text-center text-size-30 text-weight-bold">
+    <div class="text-h6">
       {{ t('profile') }}
     </div>
 
@@ -16,10 +16,10 @@
         <q-item :class="[states.itemBackgroundClass]" :clickable="!!item.id">
           <q-item-section avatar>
             <q-avatar
-              class="rounded"
               size="50px"
+              color="primary"
+              class="rounded"
               font-size="32px"
-              color="secondary"
               text-color="white"
               :icon="item.icon"
             />
@@ -38,11 +38,11 @@
       <q-menu
         fit
         target="#lang-menu"
-        class="no-shadow q-list--bordered rounded"
         transition-hide="jump-up"
         transition-show="jump-down"
+        class="no-shadow rounded"
       >
-        <q-list style="min-width: 100px">
+        <q-list bordered class="rounded">
           <q-item clickable v-close-popup @click="changeLanguage('ru')">
             <q-item-section avatar>
               <q-avatar rounded>
@@ -57,7 +57,7 @@
             <q-item-section>Русский</q-item-section>
 
             <q-item-section side v-if="data.userValue.language === 'ru'">
-              <q-icon name="check" color="secondary" size="32px" />
+              <q-icon name="check" color="primary" size="32px" />
             </q-item-section>
           </q-item>
 
@@ -65,8 +65,8 @@
             <q-item-section avatar>
               <q-avatar rounded>
                 <q-img
-                  spinner-color="primary"
                   spinner-size="82px"
+                  spinner-color="primary"
                   src="https://avatars.mds.yandex.net/get-entity_search/5488405/551775463/S600xU_2x"
                 />
               </q-avatar>
@@ -75,7 +75,7 @@
             <q-item-section>English</q-item-section>
 
             <q-item-section side v-if="data.userValue.language === 'eng'">
-              <q-icon name="check" color="secondary" size="32px" />
+              <q-icon name="check" color="primary" size="32px" />
             </q-item-section>
           </q-item>
         </q-list>

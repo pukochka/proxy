@@ -5,97 +5,176 @@
     position="bottom"
     persistent
   >
-    <q-card style="width: 100%" class="rounded" flat bordered>
-      <q-toolbar class="q-px-md">
-        <q-toolbar-title class="row text-weight-bold items-center">
-          <div>{{ version }}</div>
+    <q-card class="rounded-top" flat bordered>
+      <modal-top>
+        <div class="row no-wrap items-center">
+          <div>
+            {{ version }} <span class="text-primary">{{ t('proxy') }}</span>
+          </div>
 
           <q-badge
+            outline
             :label="status.text"
             :color="status.color"
-            text-color="white"
-            class="q-pa-sm text-weight-bold q-ml-sm rounded"
+            class="q-px-sm q-py-xs text-weight-bold q-ml-sm rounded"
           />
-        </q-toolbar-title>
+        </div>
+      </modal-top>
 
-        <q-btn
-          flat
-          icon="close"
-          class="rounded"
-          color="secondary"
-          v-close-popup
-        />
-      </q-toolbar>
-
-      <q-card-section class="q-pt-none q-gutter-y-sm">
-        <template :key="index" v-for="(item, index) in info">
-          <div class="row no-wrap items-end" v-if="item.unVisible !== true">
-            <div class="">{{ item.label }}</div>
+      <q-card-section class="q-pt-none q-pb-sm q-gutter-y-sm">
+        <div class="rounded bordered q-pa-sm">
+          <div class="row no-wrap items-end">
+            <div class="">IP:{{ t('port') }}</div>
 
             <div class="col-grow q-mx-sm relative-position">
               <div class="dashed-line"></div>
             </div>
 
-            <div class="q-mr-sm" v-if="item.countryCode || item.image">
-              <country-flag
-                v-if="item.countryCode"
-                :code="item.countryCode"
-                :fallback-src="item.image"
-                :width="24"
-                :height="18"
-              />
-              <q-img
-                v-else-if="item.image"
-                class="rounded"
-                :src="item.image"
-                spinner-color="secondary"
-                style="height: 24px; width: 24px"
-              />
+            <div class="q-mr-sm ellipsis" style="max-width: 100px">
+              {{ data.selectedOrder.ip }}:{{ data.selectedOrder.port }}
             </div>
 
-            <div class="ellipsis">{{ item.value }}</div>
-
             <copy-button
-              class="q-ml-sm"
-              v-if="item.copy"
-              :text="item.value"
+              :text="data.selectedOrder.ip + ':' + data.selectedOrder.port"
             ></copy-button>
           </div>
-        </template>
+        </div>
+
+        <div
+          class="rounded bordered q-pa-sm"
+          v-if="data.selectedOrder.proxy !== '5'"
+        >
+          <div class="row no-wrap items-end">
+            <div class="">{{ t('login') }}</div>
+
+            <div class="col-grow q-mx-sm relative-position">
+              <div class="dashed-line"></div>
+            </div>
+
+            <div class="q-mr-sm ellipsis" style="max-width: 100px">
+              {{ data.selectedOrder.user }}
+            </div>
+
+            <copy-button :text="data.selectedOrder.user"></copy-button>
+          </div>
+        </div>
+
+        <div class="rounded bordered q-pa-sm">
+          <div class="row no-wrap items-end">
+            <div class="">
+              {{
+                data.selectedOrder.proxy === '5'
+                  ? t('secretKey')
+                  : t('password')
+              }}
+            </div>
+
+            <div class="col-grow q-mx-sm relative-position">
+              <div class="dashed-line"></div>
+            </div>
+
+            <div class="q-mr-sm ellipsis" style="max-width: 100px">
+              {{ data.selectedOrder.pass }}
+            </div>
+
+            <copy-button :text="data.selectedOrder.pass"></copy-button>
+          </div>
+        </div>
+
+        <div
+          class="rounded bordered q-pa-sm"
+          v-if="data.selectedOrder.proxy !== '5'"
+        >
+          <div class="row no-wrap items-end">
+            <div class="">IP</div>
+
+            <div class="col-grow q-mx-sm relative-position">
+              <div class="dashed-line"></div>
+            </div>
+
+            <div class="q-mr-sm ellipsis" style="max-width: 100px">
+              {{ data.selectedOrder.ip }}
+            </div>
+
+            <copy-button :text="data.selectedOrder.ip"></copy-button>
+          </div>
+        </div>
+
+        <div class="row no-wrap q-gutter-x-sm">
+          <div class="col row items-center rounded bordered q-pa-xs">
+            <q-avatar square class="rounded" size="24px">
+              <country-flag
+                squared
+                :width="24"
+                :height="24"
+                :code="data.selectedOrder.country.org_id"
+                :fallback-src="data.selectedOrder.country.image"
+              />
+            </q-avatar>
+
+            <div class="text-weight-bold col text-center">{{ country }}</div>
+          </div>
+
+          <div
+            class="col rounded bordered text-center text-weight-bold text-subtitle1 q-pa-xs"
+          >
+            {{ (data.selectedOrder.price / 100).toFixed(2) + ' ₽' }}
+          </div>
+        </div>
+
+        <div class="rounded bordered q-pa-sm">
+          <div class="row items-center justify-between q-pb-xs">
+            {{ t('period') }}
+
+            <q-badge
+              outline
+              :label="validityRemainingBadge.label"
+              :color="validityRemainingBadge.color"
+              class="q-px-sm text-weight-bold q-ml-sm rounded q-py-xs"
+            />
+          </div>
+
+          <div
+            class="row items-center justify-between text-primary text-weight-bold"
+          >
+            {{ createAt }}
+
+            <q-icon name="arrow_forward" color="primary" size="24px" />
+
+            {{ endAt }}
+          </div>
+        </div>
       </q-card-section>
 
-      <div class="row q-gutter-y-sm q-px-md q-pb-md">
+      <div class="row q-gutter-y-sm q-px-md q-pb-sm">
         <q-btn
           v-if="data.selectedOrder.proxy === '5'"
-          dense
           no-caps
-          unelevated
+          outline
           icon="launch"
           target="_blank"
-          color="secondary"
-          class="rounded col-12"
-          :label="t('activateProxy')"
+          color="primary"
+          class="rounded col-12 q-py-sm"
           :href="activateProxyHref"
+          :label="t('activateProxy')"
         />
 
         <q-btn
           v-if="data.selectedOrder.proxy !== '5'"
-          dense
           no-caps
-          unelevated
-          color="secondary"
-          class="rounded col-12"
-          :loading="loading.check"
+          outline
+          color="primary"
+          class="rounded col-12 q-py-sm"
           :label="t('check')"
+          :loading="loading.check"
           @click="checkProxy"
         />
 
         <q-btn
-          dense
           no-caps
-          class="rounded col-12"
           unelevated
           color="primary"
+          class="rounded col-12 q-py-sm"
           :loading="loading.prolong"
           :label="t('prolong_proxy')"
           @click="prolongProxy"
@@ -118,8 +197,54 @@ import { fetchProxy } from 'boot/queries';
 
 import CopyButton from 'components/CopyButton.vue';
 import CountryFlag from 'components/CountryFlag.vue';
+import ModalTop from 'components/ModalTop.vue';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
+
+const MS_DAY = 86400000;
+const MS_HOUR = 3600000;
+
+function ruPluralForms(
+  n: number,
+  one: string,
+  few: string,
+  many: string
+): string {
+  const nAbs = Math.abs(Math.floor(n)) % 100;
+  const n1 = nAbs % 10;
+  if (nAbs > 10 && nAbs < 20) return `${n} ${many}`;
+  if (n1 > 1 && n1 < 5) return `${n} ${few}`;
+  if (n1 === 1) return `${n} ${one}`;
+  return `${n} ${many}`;
+}
+
+function enPluralWord(n: number, singular: string, plural: string): string {
+  return `${n} ${n === 1 ? singular : plural}`;
+}
+
+const validityRemainingBadge = computed(() => {
+  const diff = Number(data.selectedOrder.end_time) * 1000 - Date.now();
+
+  if (diff <= 0) {
+    return { label: t('order_remaining_expired'), color: 'warning' as const };
+  }
+
+  if (diff >= MS_DAY) {
+    const days = Math.floor(diff / MS_DAY);
+    const label =
+      locale.value === 'ru'
+        ? ruPluralForms(days, 'день', 'дня', 'дней')
+        : enPluralWord(days, 'day', 'days');
+    return { label, color: 'green' as const };
+  }
+
+  const hours = Math.max(1, Math.ceil(diff / MS_HOUR));
+  const label =
+    locale.value === 'ru'
+      ? ruPluralForms(hours, 'час', 'часа', 'часов')
+      : enPluralWord(hours, 'hour', 'hours');
+  return { label, color: 'orange' as const };
+});
 const states = useStatesStore();
 const data = useDataStore();
 
@@ -163,11 +288,11 @@ const country = computed(
 );
 
 const createAt = computed(() =>
-  date.formatDate(data.selectedOrder.start_time * 1000, 'DD-MM-YYYY HH:mm')
+  date.formatDate(data.selectedOrder.start_time * 1000, 'DD-MM-YYYY')
 );
 
 const endAt = computed(() =>
-  date.formatDate(data.selectedOrder.end_time * 1000, 'DD-MM-YYYY HH:mm')
+  date.formatDate(data.selectedOrder.end_time * 1000, 'DD-MM-YYYY')
 );
 
 const activateProxyHref = computed(() => {
@@ -175,7 +300,6 @@ const activateProxyHref = computed(() => {
   const port = encodeURIComponent(String(data.selectedOrder.port || ''));
   const secret = encodeURIComponent(data.selectedOrder.pass || '');
 
-  // Universal Telegram proxy link, works better in WebApp/Desktop than tg:// deep links.
   return `https://t.me/proxy?server=${server}&port=${port}&secret=${secret}`;
 });
 
@@ -212,57 +336,4 @@ const update = () => {
     user_secret_key: data.systemUserValue.secret_user_key,
   });
 };
-
-const info = computed((): InfoProps[] => [
-  {
-    label: 'Proxy',
-    value: data.selectedOrder.host + ':' + data.selectedOrder.port,
-    copy: true,
-  },
-  {
-    label: t('login'),
-    value: data.selectedOrder.user,
-    copy: true,
-    unVisible: data.selectedOrder.proxy === '5',
-  },
-  {
-    label: data.selectedOrder.proxy === '5' ? t('secretKey') : t('password'),
-    value: data.selectedOrder.pass,
-    copy: true,
-  },
-  {
-    label: 'IP',
-    value: data.selectedOrder.ip,
-    copy: true,
-  },
-  {
-    label: t('country'),
-    value: country.value,
-    countryCode: data.selectedOrder.country.org_id,
-    image: data.selectedOrder.country.image,
-  },
-  {
-    label: t('date'),
-    value: createAt.value,
-  },
-
-  {
-    label: t('end'),
-    value: endAt.value,
-  },
-  {
-    label: t('price'),
-    value: (data.selectedOrder.price / 100).toFixed(2) + ' ₽',
-  },
-]);
-
-interface InfoProps {
-  label: string;
-  value: any;
-  copy?: boolean;
-  image?: string;
-  countryCode?: string;
-  change?: boolean;
-  unVisible?: boolean;
-}
 </script>

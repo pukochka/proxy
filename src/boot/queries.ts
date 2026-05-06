@@ -145,12 +145,9 @@ async function runFetchProxy(
         );
         data.mtproto = mtproto;
 
-        const pallet =
-          colors.find((item) => item.id === Number(color)) ?? colors[0];
-        setCssVar('primary', pallet.primary);
-        setCssVar('secondary', pallet.secondary);
-        LocalStorage.set('_bott-primary', pallet.primary);
-        LocalStorage.set('_bott-secondary', pallet.secondary);
+        const primary = colors[Number(color)] || colors[0];
+        setCssVar('primary', primary);
+        LocalStorage.set('_bott-primary', primary);
         break;
       }
 

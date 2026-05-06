@@ -3,11 +3,11 @@
     <q-item-section avatar>
       <q-avatar square class="rounded" size="32px">
         <country-flag
-          :code="item.org_id"
-          :fallback-src="item.image"
+          squared
           :width="32"
           :height="32"
-          squared
+          :code="item.org_id"
+          :fallback-src="item.image"
         />
       </q-avatar>
     </q-item-section>

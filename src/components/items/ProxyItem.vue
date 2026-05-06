@@ -1,54 +1,36 @@
 <template>
   <q-item
     clickable
-    class="rounded q-card--bordered bg-blur proxy-item-card"
-    :class="glowModifierClass"
+    class="rounded bordered bg-blur"
+    :class="props.item.version === '4' ? ' bordered-popular' : ''"
     @click="select"
   >
-    <q-item-section class="q-gutter-y-sm proxy-item-card__content">
-      <q-item-label class="text-center text-h5 text-weight-bold">
-        {{ item.title }}
+    <q-item-section side>
+      <CustomEmoji :src="proxyIcons[props.item.version]" :size="64" alt="" />
+    </q-item-section>
+
+    <q-item-section class="q-gutter-y-sm">
+      <q-item-label>
+        <span class="text-h4">{{ item.title }} </span>
+
+        <span class="text-h6 text-primary"> {{ ' ' + t('proxy') }}</span>
       </q-item-label>
 
-      <div
-        class="text-weight-bold text-caption text-center"
-        v-if="props.item.title.includes('v6')"
-      >
-        {{ t('support_ipv6') }}
-      </div>
-
-      <div
-        v-else-if="
-          !props.item.title.includes('v6') &&
-          !props.item.title.includes('MTproto')
-        "
-        class="text-weight-bold text-caption text-center"
-      >
-        {{ t('support_all') }}
-      </div>
-
-      <div
-        class="text-weight-bold text-caption text-center"
-        v-if="props.item.title.includes('MTproto')"
-      >
-        {{ t('telegramOnly') }}
-      </div>
-
-      <div
-        class="text-weight-bold text-caption text-center"
-        v-if="props.item.title.includes('Shared')"
-      >
-        {{ t('used_many') }}
-      </div>
-
-      <div v-else class="text-weight-bold text-caption text-center">
-        {{ t('used_once') }}
-      </div>
+      <q-item-label caption>
+        {{ proxyDescriptions[props.item.version] }}
+      </q-item-label>
     </q-item-section>
 
-    <q-item-section side class="proxy-item-card__content">
-      <q-icon name="chevron_right" size="32px" />
+    <q-item-section side>
+      <q-icon name="chevron_right" color="primary" size="32px" />
     </q-item-section>
+
+    <div
+      v-if="props.item.version === '4'"
+      class="absolute-top-right text-caption bg-primary text-white text-weight-bold rounded-bottom q-px-xs q-mr-md"
+    >
+      ⚡ {{ t('popular') }}
+    </div>
 
     <q-inner-loading :showing="loading" class="z-marginals">
       <q-spinner-ball size="64px" color="primary" />
@@ -58,25 +40,39 @@
 
 <script lang="ts" setup>
 import config from 'src/config';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { defaultProxyItem } from 'stores/defaults';
 import { useDataStore } from 'stores/data/dataStore';
 import { fetchProxy } from 'boot/queries';
+import CustomEmoji from 'components/emoji/CustomEmoji.vue';
 
 const props = withDefaults(defineProps<ProxyItemProps>(), {
   item: () => defaultProxyItem,
 });
 
-const glowModifierClass = computed(() =>
-  props.gradientVariant === undefined
-    ? ''
-    : `proxy-item-card--glow proxy-item-card--g${props.gradientVariant % 4}`
-);
+const linkUrl = new URL('../../assets/Link.tgs', import.meta.url).href;
+const earthUrl = new URL('../../assets/Earth.tgs', import.meta.url).href;
+const planeUrl = new URL('../../assets/Plane.tgs', import.meta.url).href;
+const diamondUrl = new URL('../../assets/Diamond.tgs', import.meta.url).href;
+
+const proxyIcons = {
+  '3': diamondUrl,
+  '4': earthUrl,
+  '5': planeUrl,
+  '6': linkUrl,
+};
 
 const { t } = useI18n();
 const data = useDataStore();
+
+const proxyDescriptions = {
+  '3': t('ipv4shared'),
+  '4': t('ipv4'),
+  '5': t('mtproto'),
+  '6': t('ipv6'),
+};
 
 const loading = ref(false);
 

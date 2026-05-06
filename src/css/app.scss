@@ -20,7 +20,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--q-secondary);
+  background: var(--q-primary);
   border: 3px solid #ffffff;
   border-radius: 4px;
   &:hover {
@@ -46,6 +46,10 @@ body {
 body.body--dark {
   .bordered {
     border: 1px solid $white-opacity !important;
+  }
+
+  .bordered-popular {
+    border: 2px solid var(--q-primary) !important;
   }
 }
 
@@ -139,5 +143,17 @@ body.body--dark {
 }
 
 .rounded {
-  border-radius: 10px !important;
+  border-radius: 14px !important;
+}
+
+.bordered-popular {
+  border: 2px solid var(--q-primary) !important;
+}
+
+.rounded-top {
+  border-radius:  10px 10px 0 0  !important;
+}
+
+.rounded-bottom {
+  border-radius: 0 0 10px 10px  !important;
 }

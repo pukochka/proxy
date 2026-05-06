@@ -19,7 +19,7 @@
               <q-radio
                 v-model="selected"
                 :val="key"
-                color="secondary"
+                color="primary"
                 @click="select(key)"
               />
             </q-item-section>
@@ -50,7 +50,7 @@
             unelevated
             no-caps
             class="rounded col"
-            color="secondary"
+            color="primary"
             :label="t('prolong')"
             :loading="loading.prolong"
             @click="prolong"
@@ -58,7 +58,7 @@
         </div>
 
         <q-inner-loading :showing="loading.price">
-          <q-spinner size="32px" color="secondary" />
+          <q-spinner size="32px" color="primary" />
         </q-inner-loading>
       </q-card-section>
     </q-card>

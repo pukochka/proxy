@@ -1,11 +1,15 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-transparent z-header bg-blur q-ma-sm">
+    <q-header
+      class="bg-transparent z-header bg-blur q-ma-sm"
+      v-if="states.loadings.init === false"
+    >
       <q-tabs
         dense
         align="justify"
+        active-color="primary"
+        :class="config.dark ? '' : 'text-grey-8'"
         class="bg-transparent rounded bordered"
-        :class="[config.dark ? ' text-secondary' : ' text-primary']"
         v-model="states.tab"
       >
         <q-tab
@@ -48,17 +52,10 @@
     <view-order></view-order>
 
     <type-menu></type-menu>
-
-    <date-filter></date-filter>
-
-    <ip-filter></ip-filter>
-
-    <type-filter></type-filter>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import config from 'src/config';
 import { headerTabs } from 'assets/content';
 
 import { useI18n } from 'vue-i18n';
@@ -75,10 +72,7 @@ import ProlongMenu from 'components/menu/ProlongMenu.vue';
 
 import BuildingOrder from 'components/order/BuildingOrder.vue';
 import ViewOrder from 'components/order/ViewOrder.vue';
-
-import DateFilter from 'components/filters/DateFilter.vue';
-import IpFilter from 'components/filters/IpFilter.vue';
-import TypeFilter from 'components/filters/TypeFilter.vue';
+import config from 'src/config';
 
 const { t } = useI18n();
 const states = useStatesStore();

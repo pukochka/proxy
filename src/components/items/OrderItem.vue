@@ -1,9 +1,5 @@
 <template>
-  <q-item
-    style="height: 120px"
-    :class="[states.itemBackgroundClass]"
-    class="column"
-  >
+  <q-item style="height: 120px" class="column bg-blur">
     <div class="row no-wrap col-grow">
       <q-item-section class="items-center" avatar>
         <q-avatar square class="rounded" size="36px">
@@ -41,21 +37,22 @@
       </q-item-section>
     </div>
 
-    <div class="row justify-end q-gutter-x-sm q-pt-xs">
+    <div class="row justify-end items-center q-gutter-x-sm q-pt-xs">
       <q-btn
+        dense
         no-caps
-        unelevated
+        outline
+        icon="delete"
         class="rounded"
-        color="red"
-        :label="t('delete')"
+        color="negative"
         @click="data.deleteProxy(item.order_org_id)"
       />
 
       <q-btn
         no-caps
-        unelevated
+        outline
         class="rounded"
-        color="secondary"
+        color="primary"
         :label="t('details')"
         @click="openDetails"
       />

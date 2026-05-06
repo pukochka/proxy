@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded relative-position overflow-hidden">
+  <div class="rounded bg-blur relative-position overflow-hidden">
     <div
       :style="{ height: height }"
       v-if="currentItems.length === 0 && searching"
@@ -7,7 +7,7 @@
       <div
         class="absolute-full q-pa-md column flex-center text-center rounded q-gutter-y-sm"
       >
-        <q-icon color="secondary" name="search" size="32px" />
+        <q-icon color="primary" name="search" size="32px" />
 
         <div>{{ t('search_not_found') }}</div>
       </div>
@@ -26,10 +26,10 @@
       <q-tab-panel name="0" class="q-pa-none">
         <q-list class="rounded overflow-hidden" bordered separator>
           <component
-            v-for="(item, index) of items"
             :key="index"
-            :is="RenderItem"
             :item="item"
+            :is="RenderItem"
+            v-for="(item, index) of items"
             @select="emit('select', item)"
           ></component>
         </q-list>
@@ -38,10 +38,10 @@
       <q-tab-panel name="1" class="q-pa-none">
         <q-list class="rounded overflow-hidden" bordered separator>
           <component
-            v-for="(item, index) of items"
             :key="index"
-            :is="RenderItem"
             :item="item"
+            :is="RenderItem"
+            v-for="(item, index) of items"
             @select="emit('select', item)"
           ></component>
         </q-list>
@@ -50,16 +50,16 @@
   </div>
 
   <div
-    class="row items-center relative-position rounded overflow-hidden non-selectable q-mt-sm"
-    style="height: 36px"
     v-if="hiddenButtons === false || pageCount > 1"
+    class="row items-center relative-position non-selectable q-mt-sm"
+    style="height: 36px"
   >
     <q-btn
-      unelevated
       no-caps
-      class="absolute-left"
-      color="secondary"
+      outline
+      color="primary"
       padding="4px 8px"
+      class="absolute-left rounded"
       icon="navigate_before"
       v-if="currentStartIndex > 0"
       :label="labelPrev"
@@ -74,12 +74,12 @@
     </div>
 
     <q-btn
-      unelevated
       no-caps
-      class="absolute-right"
-      color="secondary"
+      outline
+      color="primary"
       padding="4px 8px"
       icon-right="navigate_next"
+      class="absolute-right rounded"
       v-if="
         items.length >= visibleItems &&
         currentItems.length >= currentEndIndex + 1

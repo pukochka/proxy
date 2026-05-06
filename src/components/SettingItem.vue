@@ -1,5 +1,5 @@
 <template>
-  <div class="row no-wrap items-end text-size-16">
+  <div class="row no-wrap items-end text-size-16 bordered rounded q-pa-sm">
     <div class="text-weight-bold">{{ item.label }}</div>
 
     <div class="col-grow q-mx-sm relative-position">
@@ -14,6 +14,7 @@
         :width="24"
         :height="18"
       />
+
       <q-img
         v-else-if="item.icon"
         class="rounded"
@@ -24,19 +25,19 @@
     </div>
 
     <div class="text-weight-bold">{{ item.value }}</div>
-  </div>
 
-  <div class="row">
     <q-btn
       dense
       no-caps
       outline
-      class="rounded col"
-      color="secondary"
+      color="primary"
+      class="rounded q-ml-sm q-px-sm"
       :label="t('change')"
       @click="open"
     />
   </div>
+
+  <div class="row"></div>
 </template>
 
 <script lang="ts" setup>

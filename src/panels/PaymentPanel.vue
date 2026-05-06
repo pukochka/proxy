@@ -1,5 +1,7 @@
 <template>
   <div class="q-gutter-y-md col" v-if="states.loadings.init === false">
+    <div class="text-h6">Выберите тип прокси</div>
+
     <proxy-item
       :key="item"
       :item="item"
